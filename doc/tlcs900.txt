@@ -317,14 +317,29 @@ CD-ROM中の東芝セミコンダクタ社製の開発環境(TOSHIBA IDE)を使用して開発を
 
 utils/tlcs900-toshiba 上のツール tlcs900offset.exe と tlcs900vec.exe を
 構築します.
-utils/tlcs900-toshiba 内の Microsoft Visual Studio 2010 ワークスペース
+utils/tlcs900-toshiba 内の Microsoft Visual Studio 2010 ソリューション
 ファイルtlcs900_toshiba.sln を開きます．ビルドメニューにてそれぞれのプ
 ロジェクトをビルドし，tlcs900offset.exe と tlcs900vec.exe を生成します．
 必要に応じてビルドメニューのバッチビルドを使用するか，アクティブなプロ
 ジェクトの構成を使用してプロジェクトを変更し，リビルドを行ってください．
 
-なお、カーネル構築にあたっては、コンフィギュレータを使用します．
-コンフィギュレータのの構築方法は user.txt を参照してください．
+カーネル構築のためのコンフィギュレータ cfg.exe を構築します．
+コンフィギュレータの構築方法は user.txt を参照してください．
+なお、Windows上で実行可能なcfg.exeを構築する場合，MinGW (Minimalist GNU
+for Windows)を使用してください．
+
+	MinGW (Minimalist GNU for Windows)
+	http://www.mingw.org/
+	http://sourceforge.net/projects/mingw/  (インストーラの入手先)
+
+また、VCを利用して cfg.exe を構築する場合は，cfg/vc_project 内の
+Microsoft Visual C++ 6.0 ワークスペースファイル configurator.dsw を開い
+て，cfg.exe を生成します．
+configurator.dsw は，Microsoft Visual Studio 2005 までの統合開発環境で
+開けることを確認しています．Microsoft Visual Studio 2005 にて変換した
+configurator.sln は，Microsoft Visual Studio 2010 までの統合開発環境で
+開けることを確認しています．ただし，十分な確認が取れているわけではあり
+ません．
 
 4.1.2  サンプルプロジェクトのビルド
 
