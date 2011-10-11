@@ -1,19 +1,16 @@
 #! /usr/bin/perl
 #
-#  TOPPERS/JSP Kernel
-#      Toyohashi Open Platform for Embedded Real-Time Systems/
-#      Just Standard Profile Kernel
+#  TOPPERS Software
+#      Toyohashi Open Platform for Embedded Real-Time Systems
 # 
 #  Copyright (C) 2000-2003 by Embedded and Real-Time Systems Laboratory
 #                              Toyohashi Univ. of Technology, JAPAN
-#  Copyright (C) 2004-2005 by Embedded and Real-Time Systems Laboratory
+#  Copyright (C) 2004-2007 by Embedded and Real-Time Systems Laboratory
 #              Graduate School of Information Science, Nagoya Univ., JAPAN
 # 
-#  上記著作権者は，以下の (1)〜(4) の条件か，Free Software Foundation 
-#  によって公表されている GNU General Public License の Version 2 に記
-#  述されている条件を満たす場合に限り，本ソフトウェア（本ソフトウェア
-#  を改変したものを含む．以下同じ）を使用・複製・改変・再配布（以下，
-#  利用と呼ぶ）することを無償で許諾する．
+#  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
+#  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
+#  変・再配布（以下，利用と呼ぶ）することを無償で許諾する．
 #  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
 #      権表示，この利用条件および下記の無保証規定が，そのままの形でソー
 #      スコード中に含まれていること．
@@ -30,38 +27,42 @@
 #        報告すること．
 #  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
 #      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
+#      また，本ソフトウェアのユーザまたはエンドユーザからのいかなる理
+#      由に基づく請求からも，上記著作権者およびTOPPERSプロジェクトを
+#      免責すること．
 # 
 #  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
-#  よびTOPPERSプロジェクトは，本ソフトウェアに関して，その適用可能性も
-#  含めて，いかなる保証も行わない．また，本ソフトウェアの利用により直
-#  接的または間接的に生じたいかなる損害に関しても，その責任を負わない．
+#  よびTOPPERSプロジェクトは，本ソフトウェアに関して，特定の使用目的
+#  に対する適合性も含めて，いかなる保証も行わない．また，本ソフトウェ
+#  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
+#  の責任を負わない．
 # 
-#  @(#) $Id: makedep,v 1.11 2005/11/24 11:44:31 hiro Exp $
+#  @(#) $Id$
 # 
 
 require "getopt.pl";
 
 #  オプションの定義
 #
-#  -C <cc_path>	Cコンパイラのコマンド名
-#  -O <cc_opts>	Cコンパイラ/CPPに渡すオプション
+#  -C <cc_path>		Cコンパイラのコマンド名
+#  -O <cc_opts>		Cコンパイラ/CPPに渡すオプション
+#  -X				ソースファイルを強制的にCヘッダファイルと見なす
 #
-#  -X		ソースファイルを強制的にCヘッダファイルと見なす
+#  -T <target>		ターゲットのファイル名
+#  -D <t_dir>		ターゲットのディレクトリ名を指定する
+#  -d				ターゲットのディレクトリ部を保持する
 #
-#  -T <target>	ターゲットのファイル名
-#  -D <t_dir>	ターゲットのディレクトリ名を指定する
-#  -d		ターゲットのディレクトリ部を保持する
-#  -s		ターゲットのサフィックスを ".s" にする（デフォルトは ".o"）
+#  -R <dirname>		Cygwin環境におけるルートディレクトリ名を指定する
+#					（デフォルトはcygdrive）
 
 #
 #  オプションの処理
 #
-do Getopt("COTD");
+do Getopt("COTDR");
 
 $cc_path = $opt_C;
 $cc_opts = $opt_O;
 
-$suffix = $opt_s ? "s" : "o";
 if ($opt_T) {
 	$target_file = $opt_T;
 }
@@ -70,6 +71,22 @@ elsif ($opt_D) {
 }
 elsif (!$opt_d) {
 	$target_dir = "";
+}
+
+if ($opt_R) {
+	$cygwin_root = $opt_R;
+}
+else {
+	$cygwin_root = "cygdrive";
+}
+
+#
+#  Cygwin環境の判別
+#
+use POSIX;
+@uname = do uname();
+if ($uname[0] =~ /^cygwin/i) {
+	$cygwin = 1;
 }
 
 #
@@ -84,7 +101,7 @@ sub output_dependlist {
 	}
 	else {
 		$target = $file;
-		$target =~ s/(.*)\.(.)/$1.$suffix/;
+		$target =~ s/(.*)\.(.*)/$1.o/;
 	}	
 	if (defined($target_dir)) {
 		$target =~ s/^.*\/([^\/]+)$/$1/;
@@ -125,8 +142,11 @@ sub makedepend_one {
 	while ($line = <INPUT>) {
 		if ($line =~ /^\#\s*([0-9]+)\s*\"([^\"]+)\"/) {
 			$filename = $2;
-			$filename =~ s/ /\\ /;
+			$filename =~ s/ /\\ /g;
 			if ($filename !~ /^\<.*\>$/ && $filename !~ /\/$/) {
+				if ($cygwin) {
+					$filename =~ s/^([a-zA-Z]):/\/$cygwin_root\/$1/;
+				}
 				$dependlist{$filename} = 1;
 			}
 		}
