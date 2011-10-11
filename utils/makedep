@@ -50,7 +50,6 @@ require "getopt.pl";
 #
 #  -T <target>		ターゲットのファイル名
 #  -D <t_dir>		ターゲットのディレクトリ名を指定する
-#  -d				ターゲットのディレクトリ部を保持する
 #
 #  -R <dirname>		Cygwin環境におけるルートディレクトリ名を指定する
 #					（デフォルトはcygdrive）
@@ -69,9 +68,6 @@ if ($opt_T) {
 elsif ($opt_D) {
 	$target_dir = $opt_D;
 }
-elsif (!$opt_d) {
-	$target_dir = "";
-}
 
 if ($opt_R) {
 	$cygwin_root = $opt_R;
@@ -83,9 +79,7 @@ else {
 #
 #  Cygwin環境の判別
 #
-use POSIX;
-@uname = do uname();
-if ($uname[0] =~ /^cygwin/i) {
+if ($^O eq 'cygwin') {
 	$cygwin = 1;
 }
 
