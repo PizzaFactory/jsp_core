@@ -37,7 +37,7 @@
 #  @(#) $Id: configure,v 1.13 2003/12/06 06:16:16 hiro Exp $
 # 
 
-require "getopt.pl";
+use Getopt::Std;
 
 #  オプションの定義
 #
@@ -68,7 +68,7 @@ require "getopt.pl";
 #
 #  オプションの処理
 #
-do Getopt("CSTAULDPpld");
+do getopt("CSTAULDPpld");
 unless ($opt_C) {
 	print STDERR "configure: -C option is mandatory\n";
 	exit(1);
