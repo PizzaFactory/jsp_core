@@ -40,7 +40,7 @@
 #  @(#) $Id$
 # 
 
-require "getopt.pl";
+use Getopt::Std;
 
 #  オプションの定義
 #
@@ -58,7 +58,7 @@ require "getopt.pl";
 #
 #  オプションの処理
 #
-do Getopt("COTDR");
+do getopt("COTDR");
 
 $cc_path = $opt_C;
 $cc_opts = $opt_O;
