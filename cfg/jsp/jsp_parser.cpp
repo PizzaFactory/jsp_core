@@ -84,12 +84,14 @@ void CoreParser::parseOption(Directory & container)
             "     alphabetic (in alphabetic order)\n"
             "     fcfs       (in arrival order [as default])\n"
             "     reverse    (reverse the order)\n"
-            "  -var, --variable-id : Prepare ID-variable for storing its identifier number\n",
+            "  -var, --variable-id : Prepare ID-variable for storing its identifier number\n"
+            "  -ics, --interrupt-context-stack-size=bytesize : Specify the size of interrupt context stack size\n",
             "  -obj, --dump-object=ファイル名 : 指定したファイルにオブジェクト情報を出力します\n"
             "  -ao, --assign-order=順序 : 自動ID割当の割当順序を指定します\n"
             "    割当順序は次の3つの組合せで指定します.\n"
             "     alphabetic (ABC順), fcfs (宣言順 [デフォルト]), reverse (逆順)\n"
-            "  -var, --variable-id : ID番号を格納する変数を用意します");
+            "  -var, --variable-id : ID番号を格納する変数を用意します"
+            "  -ics, --interrupt-context-stack-size=バイト数 : 非タスクコンテキストのスタックサイズを指定します\n");
         return;
     }
 
@@ -97,6 +99,7 @@ void CoreParser::parseOption(Directory & container)
     checkOption("cpu","cpu");
     checkOption("system","system");
     checkOption("var","variable-id");
+    checkOption("ics","interrupt-context-stack-size");
 }
 
 namespace {
@@ -633,6 +636,30 @@ namespace {
         out << "#if TKERNEL_PRID != 0x0001u /* TOPPERS/JSP */\n"
                "#error \"You can not use this configuration file without TOPPERS/JSP\"\n"
                "#endif\n\n";
+
+	// ICS の出力
+	if (getOptionParameter()["ics"].isValid()) {
+             string ics;
+	     ics = getOptionParameter()["ics"][0];
+             out << "/* Interrupt context stack */\n"
+	       "#ifndef  TOPPERS_ICS_DEFINE_PREFIX1__\n"
+	       "# define TOPPERS_ICS_DEFINE_PREFIX1__\n"
+	       "#endif\n"
+	       "#ifndef  TOPPERS_ICS_DEFINE_PREFIX2__\n"
+	       "# define TOPPERS_ICS_DEFINE_PREFIX2__\n"
+	       "#endif\n"
+	       "#ifndef  TOPPERS_ICS_DEFINE_SUFFIX1__\n"
+	       "# define TOPPERS_ICS_DEFINE_SUFFIX1__\n"
+	       "#endif\n"
+	       "#ifndef  TOPPERS_ICS_DEFINE_SUFFIX2__\n"
+	       "# define TOPPERS_ICS_DEFINE_SUFFIX2__\n"
+	       "#endif\n"
+	       "TOPPERS_ICS_DEFINE_PREFIX1__\n"
+	       "char TOPPERS_ICS_DEFINE_PREFIX2__\n"
+	       "__toppers_stack_interrupt_context[" << ics << "]\n"
+	       "TOPPERS_ICS_DEFINE_SUFFIX1__ ;\n"
+	       "TOPPERS_ICS_DEFINE_SUFFIX2__\n\n";
+	}
     }
 }
 
