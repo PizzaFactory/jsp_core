@@ -614,6 +614,45 @@ call_inirtn()
 とすべきだが，エラー条件がターゲットに依存してしまうため，今後の課題と
 する．
 
+(9) 非タスクコンテキスト用スタックの定義
+
+非タスクコンテキスト用のスタックをC言語の配列として定義したい場合は，
+cfg.exe に -ics <<値>> をオプションとして宣言する．<<値>>は，C言語の配列
+として用いることができる数値，もしくはマクロ名として有効な文字列で
+あること．-ics オプションが定義された場合には，コンフィギュレータは
+以下のようなコードを kernel_cfg.c 内に出力する．
+
+/* Interrupt context stack */
+#ifndef  TOPPERS_ICS_DEFINE_PREFIX1__
+# define TOPPERS_ICS_DEFINE_PREFIX1__
+#endif
+#ifndef  TOPPERS_ICS_DEFINE_PREFIX2__
+# define TOPPERS_ICS_DEFINE_PREFIX2__
+#endif
+#ifndef  TOPPERS_ICS_DEFINE_SUFFIX1__
+# define TOPPERS_ICS_DEFINE_SUFFIX1__
+#endif
+#ifndef  TOPPERS_ICS_DEFINE_SUFFIX2__
+# define TOPPERS_ICS_DEFINE_SUFFIX2__
+#endif
+TOPPERS_ICS_DEFINE_PREFIX1__
+char TOPPERS_ICS_DEFINE_PREFIX2__
+__toppers_stack_interrupt_context[<<値>>]
+TOPPERS_ICS_DEFINE_SUFFIX1__ ;
+TOPPERS_ICS_DEFINE_SUFFIX2__
+
+ここで，<<値>>は -ics オプションで宣言したものがそのまま入る．ターゲッ
+ト依存部開発者は，ターゲットの ABI やコンパイラの拡張仕様に基づく必要に
+応じて，TOPPERS_ICS_DEFINE_PREFIX1__, TOPPERS_ICS_DEFINE_PREFIX2__,
+TOPPERS_ICS_DEFINE_SUFFIX1__, TOPPERS_ICS_DEFINE_SUFFIX2__ をターゲット
+依存部内で定義する．また，<<値>>にプリプロセッサマクロ名を用いた場合は，
+ターゲット依存部内でデフォルト値を定義すべきである．
+
+なお，ターゲット依存で，-ics オプションを用いないことも有り得る．その場
+合，コンパイラやリンカによる非タスクコンテキスト用スタックのサイズチェッ
+クが困難になる場合があるので，アプリケーション開発者は留意する必要があ
+る．
+
 以上
 
 
