@@ -70,7 +70,7 @@ use Getopt::Std;
 #
 #  オプションの処理
 #
-do getopt("CSTAULDPpld");
+&getopt("CSTAULDPpld");
 unless ($opt_C) {
 	print STDERR "configure: -C option is mandatory\n";
 	exit(1);
@@ -83,7 +83,7 @@ $uname = $opt_A ? $opt_A : "sample1";
 $utask = $opt_U ? $opt_U : "";
 $kernel_lib = $opt_L ? $opt_L : "";
 $prefix = $opt_P ? $opt_P : "/usr/local";
-$perl = opt_p ? $opt_p : do get_path("perl", ("/usr/local/bin", "/usr/bin"));
+$perl = opt_p ? $opt_p : &get_path("perl", ("/usr/local/bin", "/usr/bin"));
 $lang = $opt_l ? $opt_l : "";
 $templatedir = $opt_d ? $opt_d : "sample";
 
