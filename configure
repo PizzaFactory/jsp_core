@@ -37,6 +37,8 @@
 #  @(#) $Id: configure,v 1.13 2003/12/06 06:16:16 hiro Exp $
 # 
 
+use strict;
+use warnings;
 use Getopt::Std;
 
 #  オプションの定義
