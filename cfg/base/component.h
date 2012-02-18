@@ -38,6 +38,10 @@
 
 // $Header: /home/CVS/configurator/base/component.h,v 1.8 2003/12/20 06:51:58 takayuki Exp $
 
+#include <list>
+#include <map>
+#include <string>
+
 #include "base/testsuite.h"
 #include "base/singleton.h"
 #include "base/except.h"
@@ -45,9 +49,6 @@
 #include "base/option.h"
 #include "base/collection.h"
 #include "base/directorymap.h"
-
-#include <list>
-#include <map>
 
 #ifndef COMPONENT_H
 #define COMPONENT_H

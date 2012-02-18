@@ -40,12 +40,15 @@
 
 // $Header: /home/CVS/configurator/base/parser.cpp,v 1.18 2003/12/15 07:32:14 takayuki Exp $
 
+#include <iomanip>
+#include <list>
+#include <map>
+#include <set>
+#include <sstream>
+#include <string>
+
 #include "base/defs.h"
 #include "base/parser.h"
-#include <sstream>
-#include <set>
-#include <map>
-#include <iomanip>
 
 using namespace std;
 

@@ -38,9 +38,13 @@
 
 // $Header: /home/CVS/configurator/base/component.cpp,v 1.13 2003/12/15 07:32:13 takayuki Exp $
 
+#include <iostream>
+#include <list>
+#include <map>
+#include <string>
+
 #include "base/component.h"
 
-#include <iostream>
 
 using namespace std;
 

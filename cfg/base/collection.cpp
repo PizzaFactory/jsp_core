@@ -38,6 +38,7 @@
 
 // $Header: /home/CVS/configurator/base/collection.cpp,v 1.3 2003/12/15 07:32:13 takayuki Exp $
 
+#include <list>
 #include "base/collection.h"
 
 

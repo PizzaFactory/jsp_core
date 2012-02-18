@@ -42,19 +42,20 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+#include <fstream>
+#include <iostream>
+#include <list>
+#include <map>
+#include <stdarg.h>
+#include <string>
+#include <sstream>
+
 #include "base/defs.h"
 
 #include "base/message.h"
 
 #include "base/directorymap.h"
 #include "base/component.h"
-
-#include <stdarg.h>
-#include <iostream>
-#include <list>
-#include <string>
-#include <fstream>
-#include <sstream>
 
 #define PARSERESULT         "/parse_result"
 

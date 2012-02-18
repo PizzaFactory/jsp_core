@@ -38,6 +38,8 @@
 
 // $Header: /home/CVS/configurator/base/message.cpp,v 1.4 2003/12/15 07:32:13 takayuki Exp $
 
+#include <string>
+
 #include "base/message.h"
 
 using namespace std;

@@ -47,12 +47,17 @@
 */
 
 
-#include "base/directorymap.h"
-#include "base/message.h"
-#include <stdarg.h>
-#include <typeinfo>
 #include <cassert>
 #include <cstdio>
+#include <map>
+#include <string>
+#include <typeinfo>
+#include <utility>
+
+#include <stdarg.h>
+
+#include "base/directorymap.h"
+#include "base/message.h"
 
 #ifdef _MSC_VER
   #pragma warning(disable:4786)

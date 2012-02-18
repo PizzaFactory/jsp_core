@@ -38,11 +38,13 @@
 
 // $Header: /home/CVS/configurator/jsp/jsp_staticapi.cpp,v 1.16 2003/12/24 07:33:26 takayuki Exp $
 
+#include <iostream>
+#include <string>
+
 #include "jsp/jsp_defs.h"
 
 #include "base/parser.h"
 #include "base/mpstrstream.h"
-#include <iostream>
 
 using namespace std;
 

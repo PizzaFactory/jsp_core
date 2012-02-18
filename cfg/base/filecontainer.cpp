@@ -40,10 +40,13 @@
 #pragma warning(disable:4786) //デバッグ文字列を255文字に切り詰めた
 #endif
 
-#include "base/filecontainer.h"
-#include <memory.h>
 #include <fstream>
+#include <map>
+#include <string>
 
+#include <memory.h>
+
+#include "base/filecontainer.h"
 using namespace std;
 
 namespace {

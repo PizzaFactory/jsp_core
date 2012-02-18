@@ -38,14 +38,15 @@
 
 // $Header: /home/CVS/configurator/jsp/jsp_check.cpp,v 1.25 2005/07/06 01:29:21 honda Exp $
 
+#include <fstream>
+#include <iomanip>
+#include <string>
+
 #include "base/defs.h"
 #include "jsp/jsp_defs.h"
 #include "base/message.h"
 #include "base/component.h"
 #include "base/filecontainer.h"
-
-#include <fstream>
-#include <iomanip>
 
 class ConfigurationChecker : public Component
 {

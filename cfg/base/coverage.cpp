@@ -36,11 +36,13 @@
  *  @(#) $Id: coverage.cpp,v 1.5 2003/12/15 07:32:13 takayuki Exp $
  */
 
+#include <iomanip>
+#include <iostream>
+#include <set>
+#include <string>
+
 #include "base/coverage_defs.h"
 #include "base/coverage_undefs.h"
-
-#include <iostream>
-#include <iomanip>
 
 using namespace std;
 

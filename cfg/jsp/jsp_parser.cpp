@@ -38,18 +38,20 @@
 
 // $Header: /home/CVS/configurator/jsp/jsp_parser.cpp,v 1.60 2004/09/09 19:22:41 takayuki Exp $
 
+#include <algorithm>
+#include <cctype>
+#include <iomanip>
+#include <map>
+#include <set>
+#include <string>
+#include <utility>
+
 #include <stdarg.h>
 
 #include "jsp/jsp_defs.h"
 #include "base/parser.h"
 #include "base/mpstrstream.h"
 #include "jsp/jsp_common.h"
-
-#include <set>
-#include <map>
-#include <cctype>
-#include <algorithm>
-#include <iomanip>
 
 using namespace ToppersJsp;
 using namespace std;

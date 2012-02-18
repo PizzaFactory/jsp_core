@@ -38,6 +38,9 @@
 
 // $Header: /home/CVS/configurator/base/mpstrstream.cpp,v 1.9 2003/12/15 07:32:13 takayuki Exp $
 
+#include <list>
+#include <string>
+
 #include "base/mpstrstream.h"
 
 using namespace std;

@@ -38,6 +38,7 @@
 
 // $Header: /home/CVS/configurator/base/clause.cpp,v 1.3 2003/12/15 07:32:13 takayuki Exp $
 
+#include <string>
 #include "base/clause.h"
 #include "base/message.h"
 

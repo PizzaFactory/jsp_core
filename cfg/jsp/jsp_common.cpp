@@ -36,11 +36,12 @@
  *  @(#) $Id: jsp_common.cpp,v 1.4 2003/12/20 06:51:58 takayuki Exp $
  */
 
+#include <ctime>
+#include <string>
+
 #include "jsp/jsp_common.h"
 
 #include "base/option.h"
-
-#include <ctime>
 
 #if defined(_MSC_VER) || defined(__BORLANDC__)
 #  define  GETLOGINNAME_WINDOWS

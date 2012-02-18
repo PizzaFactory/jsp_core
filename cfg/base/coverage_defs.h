@@ -48,13 +48,16 @@
 
 #ifdef COVERAGE
 
-#include "base/singleton.h"
-
     /* ¥Ø¥Ã¥À */
-#include <string>
+#include <iostream>
+#include <list>
 #include <map>
 #include <set>
-#include <iostream>
+#include <string>
+
+
+#include "base/singleton.h"
+
 
 
 #ifndef COVERAGE_H

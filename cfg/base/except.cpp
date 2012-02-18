@@ -38,6 +38,8 @@
 
 // $Header: /home/CVS/configurator/base/except.cpp,v 1.7 2003/12/15 07:32:13 takayuki Exp $
 
+#include <string>
+
 #include "base/except.h"
 
 using namespace std;
