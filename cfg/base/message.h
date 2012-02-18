@@ -38,8 +38,8 @@
 
 // $Header: /home/CVS/configurator/base/message.h,v 1.5 2003/12/20 06:51:58 takayuki Exp $
 
-#ifndef MESSAGE_H
-#define MESSAGE_H
+#ifndef CFG_BASE_MESSAGE_H_
+#define CFG_BASE_MESSAGE_H_
 
 #ifdef _MSC_VER
 #  pragma warning(disable:4290) //C++ の例外の指定は無視されます。関数が __declspec(nothrow) でないことのみ表示されます。
@@ -289,7 +289,7 @@ public:
         WARNING = 2
     };
 
-#ifdef EXCEPT_H
+#ifdef CFG_BASE_EXCEPT_H_
     class ExceptionMessageException : public Exception
     {
     friend class ExceptionMessage;
@@ -331,7 +331,7 @@ public:
         return *this;
     }
 
-#ifdef EXCEPT_H     //Exceptionクラスを使用する場合
+#ifdef CFG_BASE_EXCEPT_H_     //Exceptionクラスを使用する場合
         //例外の発生
     bool throwException(void) throw(Exception)
     {
@@ -358,7 +358,7 @@ public:
     //TESTSUITE_PROTOTYPE(main)
 };
 
-#ifdef EXCEPT_H     //Exceptionクラスを使用する場合
+#ifdef CFG_BASE_EXCEPT_H_     //Exceptionクラスを使用する場合
 
         //例外をスローするためのマニピュレータ
     inline ExceptionMessage & throwException(ExceptionMessage & excmsg) throw(Exception)
@@ -423,6 +423,4 @@ public:
 };
 
 
-#endif  //MESSAGE_H
-
-
+#endif  // CFG_BASE_MESSAGE_H_

@@ -38,8 +38,8 @@
 
 // $Header: /home/CVS/configurator/base/filecontainer.h,v 1.8 2003/12/15 07:32:13 takayuki Exp $
 
-#ifndef FILECONTAINER_H
-#define FILECONTAINER_H
+#ifndef CFG_BASE_FILECONTAINER_H_
+#define CFG_BASE_FILECONTAINER_H_
 
 #ifdef _MSC_VER
 #pragma warning(disable:4786) //デバッグ情報を255文字に切り詰めました
@@ -281,5 +281,4 @@ public:
     {   return * TargetVariable<T>(getAddress() + index * getStructureSize(), getSize(), getOffset(), getStructureSize());   }
 };
 
-#endif
-
+#endif  // CFG_BASE_FILECONTAINER_H_

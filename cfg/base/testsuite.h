@@ -56,8 +56,8 @@
 #endif
 
 
-#ifndef TESTSUITE_H
-#define TESTSUITE_H
+#ifndef CFG_BASE_TESTSUITE_H_
+#define CFG_BASE_TESTSUITE_H_
 
     //テストスィートをかけるかどうか
 //#define TESTSUITE
@@ -326,5 +326,4 @@ public:
 
 #endif
 
-#endif /* TESTSUITE_H */
-
+#endif  // CFG_BASE_TESTSUITE_H_

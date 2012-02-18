@@ -50,8 +50,8 @@
 #include "base/collection.h"
 #include "base/directorymap.h"
 
-#ifndef COMPONENT_H
-#define COMPONENT_H
+#ifndef CFG_BASE_COMPONENT_H_
+#define CFG_BASE_COMPONENT_H_
 
 class Component : public RuntimeObject
 {
@@ -212,7 +212,4 @@ public:
 };
 
 
-#endif
-
-
-
+#endif  // CFG_BASE_COMPONENT_H_

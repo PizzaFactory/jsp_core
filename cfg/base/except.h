@@ -38,8 +38,8 @@
 
 // $Header: /home/CVS/configurator/base/except.h,v 1.9 2003/12/20 06:51:58 takayuki Exp $
 
-#ifndef EXCEPT_H
-#define EXCEPT_H
+#ifndef CFG_BASE_EXCEPT_H_
+#define CFG_BASE_EXCEPT_H_
 
 #ifdef _MSC_VER
 #  pragma warning(disable:4290) //C++ の例外の指定は無視されます。関数が __declspec(nothrow) でないことのみ表示されます。
@@ -107,7 +107,4 @@ public:
 #define EXCEPTION_(x,y)    class x : public Exception { public: x(void) throw() : Exception(#x, y)    {} };
 #define EXCEPTION__(x,y,z) class x : public Exception { public: x(void) throw() : Exception(#x, y, z) {} };
 
-#endif
-
-
-
+#endif  // CFG_BASE_EXCEPT_H_

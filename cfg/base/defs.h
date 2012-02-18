@@ -39,8 +39,8 @@
 
 // $Header: /home/CVS/configurator/base/defs.h,v 1.10 2003/12/15 07:32:13 takayuki Exp $
 
-#ifndef DEFS_H
-#define DEFS_H
+#ifndef CFG_BASE_DEFS_H_
+#define CFG_BASE_DEFS_H_
 
     /*
      *  処理系に依存する部分
@@ -97,5 +97,4 @@
 
 #endif /* CALL_EXTERNAL_PROGRAM */
 
-#endif /* DEFS_H */
-
+#endif  // CFG_BASE_DEFS_H_

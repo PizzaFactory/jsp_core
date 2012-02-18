@@ -39,8 +39,8 @@
 // $Header: /home/CVS/configurator/jsp/jsp_common.h,v 1.8 2004/09/06 15:00:49 honda Exp $
 
 
-#ifndef JSP_COMMON_H
-#define JSP_COMMON_H
+#ifndef CFG_JSP_JSP_COMMON_H_
+#define CFG_JSP_JSP_COMMON_H_
 
 #include "base/testsuite.h"
 
@@ -128,5 +128,4 @@ namespace ToppersJsp {
 //  std::string get_agreement(std::string filename = "") throw();   //文言の取得
 }
 
-#endif
-
+#endif  // CFG_JSP_JSP_COMMON_H_

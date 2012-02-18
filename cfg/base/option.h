@@ -38,8 +38,8 @@
 
 // $Header: /home/CVS/configurator/base/option.h,v 1.5 2003/12/20 06:51:58 takayuki Exp $
 
-#ifndef OPTION_H
-#define OPTION_H
+#ifndef CFG_BASE_OPTION_H_
+#define CFG_BASE_OPTION_H_
 
 #include "base/testsuite.h"
 #include "base/singleton.h"
@@ -193,6 +193,4 @@ public:
 inline OptionParameter & getOptionParameter(void) throw()
 {   return *Singleton<OptionParameter>::getInstance();   }
 
-#endif
-
-
+#endif  // CFG_BASE_OPTION_H_

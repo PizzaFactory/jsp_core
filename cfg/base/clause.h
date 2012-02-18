@@ -38,8 +38,8 @@
 
 // $Header: /home/CVS/configurator/base/clause.h,v 1.4 2003/12/20 06:51:58 takayuki Exp $
 
-#ifndef CLAUSE_H
-#define CLAUSE_H
+#ifndef CFG_BASE_CLAUSE_H_
+#define CFG_BASE_CLAUSE_H_
 
 #include "base/testsuite.h"
 #include "base/parser.h"
@@ -190,7 +190,4 @@ public:
     TESTSUITE_PROTOTYPE(main)
 };
 
-#endif
-
-
-
+#endif  // CFG_BASE_CLAUSE_H_

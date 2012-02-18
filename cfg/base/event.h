@@ -38,8 +38,8 @@
 
 // $Header: /home/CVS/configurator/base/event.h,v 1.9 2004/09/06 15:00:49 honda Exp $
 
-#ifndef EVENT_H
-#define EVENT_H
+#ifndef CFG_BASE_EVENT_H_
+#define CFG_BASE_EVENT_H_
 
 #include "base/testsuite.h"
 #include "base/singleton.h"
@@ -189,7 +189,4 @@ struct ShutdownEvent
     int exit_code;
 };
 
-#endif
-
-
-
+#endif  // CFG_BASE_EVENT_H_

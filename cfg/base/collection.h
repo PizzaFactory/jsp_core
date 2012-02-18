@@ -38,8 +38,8 @@
 
 // $Header: /home/CVS/configurator/base/collection.h,v 1.6 2003/12/20 06:51:58 takayuki Exp $
 
-#ifndef COLLECTION_H
-#define COLLECTION_H
+#ifndef CFG_BASE_COLLECTION_H_
+#define CFG_BASE_COLLECTION_H_
 
 #include "base/testsuite.h"
 #include "base/singleton.h"
@@ -256,7 +256,4 @@ public:
 #endif
 
 
-#endif
-
-
-
+#endif  // CFG_BASE_COLLECTION_H_

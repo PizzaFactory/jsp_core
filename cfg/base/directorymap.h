@@ -38,8 +38,8 @@
 
 // $Header: /home/CVS/configurator/base/directorymap.h,v 1.9 2003/12/15 07:32:13 takayuki Exp $
 
-#ifndef DIRECTORYMAP_H
-#define DIRECTORYMAP_H
+#ifndef CFG_BASE_DIRECTORYMAP_H_
+#define CFG_BASE_DIRECTORYMAP_H_
 
 #ifdef _MSC_VER
     #pragma warning(disable:4786)
@@ -393,5 +393,4 @@ inline std::string Directory::format(const char * src, int mode)
 inline void Directory::dropValue(void)
 {   clearContent();   }
 
-#endif
-
+#endif  // CFG_BASE_DIRECTORYMAP_H_

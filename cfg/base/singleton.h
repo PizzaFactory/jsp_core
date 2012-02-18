@@ -40,8 +40,8 @@
 
 #include "base/testsuite.h"
 
-#ifndef SINGLETON_H
-#define SINGLETON_H
+#ifndef CFG_BASE_SINGLETON_H_
+#define CFG_BASE_SINGLETON_H_
 
 #ifdef _MSC_VER
 #  pragma warning(disable:4290) //C++ の例外の指定は無視されます。関数が __declspec(nothrow) でないことのみ表示されます。
@@ -313,5 +313,4 @@ template<class T> T * Singleton<T>::instance = 0;
 
 #define SINGLETON_WRAPPER(derived, base) class derived : public base { public: SINGLETON_CONSTRUCTOR_(derived) throw() : base(_singleton) {} };
 
-#endif /* SINGLETON_H */
-
+#endif  // CFG_BASE_SINGLETON_H_

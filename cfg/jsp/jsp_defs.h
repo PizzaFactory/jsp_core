@@ -38,8 +38,8 @@
 
 // $Header: /home/CVS/configurator/jsp/jsp_defs.h,v 1.12 2003/12/15 07:32:14 takayuki Exp $
 
-#ifndef JSP_DEFS_H
-#define JSP_DEFS_H
+#ifndef CFG_JSP_JSP_DEFS_H_
+#define CFG_JSP_JSP_DEFS_H_
 
 #define OBJECTTREE          "object"
 
@@ -63,5 +63,4 @@
 
 #define PREFIX              "/prefix"
 
-#endif
-
+#endif  // CFG_JSP_JSP_DEFS_H_

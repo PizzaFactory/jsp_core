@@ -39,8 +39,8 @@
 
 // $Header: /home/CVS/configurator/base/parser.h,v 1.14 2003/12/20 06:32:48 takayuki Exp $
 
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef CFG_BASE_PARSER_H_
+#define CFG_BASE_PARSER_H_
 
 #include <fstream>
 #include <iostream>
@@ -360,5 +360,4 @@ inline void Parser::setStreamIdentifier(const std::string & id)
         current->identifier = originalname;
 }
 
-#endif
-
+#endif  // CFG_BASE_PARSER_H_

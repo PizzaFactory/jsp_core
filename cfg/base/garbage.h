@@ -39,8 +39,8 @@
 // $Header: /home/CVS/configurator/base/garbage.h,v 1.7 2003/12/20 06:51:58 takayuki Exp $
 
 
-#ifndef GARBAGE_H
-#define GARBAGE_H
+#ifndef CFG_BASE_GARBAGE_H_
+#define CFG_BASE_GARBAGE_H_
 
 #ifdef _MSC_VER
 #  pragma warning(disable:4290) //C++ の例外の指定は無視されます。関数が __declspec(nothrow) でないことのみ表示されます。
@@ -113,6 +113,4 @@ public:
 };
 
 
-#endif
-
-
+#endif  // CFG_BASE_GARBAGE_H_
