@@ -621,26 +621,30 @@ enum Token::tagTokenType Parser::getToken(Token & token, bool allow_space)
             return (token.type = Token::EOS);
         }
 
-            //カレントのストリームが空になった
-        if(current->stream->eof())
-        {
-                //ファイルスタックから次のストリームを取る
-            if(!fileStack.empty())
-            {
-                if(current->stream != &cin)
-                    delete current->stream;
-                delete current;
-                
-                current = *fileStack.begin();
-                fileStack.pop_front();
-            }else
-            {
-                token.assign("<End of stream>");
-                return (token.type = Token::EOS);
-            }
-        }
+        do {
+            ch = getChar();
 
-        ch = getChar();
+            //カレントのストリームが空になった
+            if( current->stream->eof() )
+                {
+                //ファイルスタックから次のストリームを取る
+                    if(!fileStack.empty())
+                {
+                    if(current->stream != &cin)
+                        delete current->stream;
+                    delete current;
+
+                    current = *fileStack.begin();
+                    fileStack.pop_front();
+                }else
+                {
+                    token.assign("<End of stream>");
+                    return (token.type = Token::EOS);
+                }
+            }
+            else    // break this loop if not eof
+                break;
+        } while(1);
 
             //First(whitespaces) is [ \n\t\r/#]
         if( (ch == ' ') || (ch == '\t') || (ch == '\n') || (ch == '\r') || (ch == '/') || (isHeadofLine && ch == '#'))
