@@ -625,7 +625,7 @@ enum Token::tagTokenType Parser::getToken(Token & token, bool allow_space)
             ch = getChar();
 
             //カレントのストリームが空になった
-            if( current->stream->eof() )
+            if( !current->stream->good() )
                 {
                 //ファイルスタックから次のストリームを取る
                     if(!fileStack.empty())
