@@ -38,8 +38,6 @@
 
 // $Header: /home/CVS/configurator/base/singleton.h,v 1.12 2004/09/06 15:00:49 honda Exp $
 
-#include "base/testsuite.h"
-
 #ifndef CFG_BASE_SINGLETON_H_
 #define CFG_BASE_SINGLETON_H_
 
@@ -49,9 +47,11 @@
 #  pragma warning(disable:4786) //デバッグ情報で識別子が 255 文字に切り捨てられました。
 #endif
 
+#include <cstdlib>
 #include <new>
 #include <stdexcept>
-#include <cstdlib>
+
+#include "base/testsuite.h"
 
 /*
  *  シングルトンパターン 実装

@@ -42,11 +42,11 @@
 #include <iomanip>
 #include <string>
 
-#include "base/defs.h"
-#include "jsp/jsp_defs.h"
-#include "base/message.h"
 #include "base/component.h"
+#include "base/defs.h"
 #include "base/filecontainer.h"
+#include "base/message.h"
+#include "jsp/jsp_defs.h"
 
 class ConfigurationChecker : public Component
 {

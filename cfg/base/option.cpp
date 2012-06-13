@@ -38,6 +38,8 @@
 
 // $Header: /home/CVS/configurator/base/option.cpp,v 1.3 2003/12/15 07:32:14 takayuki Exp $
 
+#include <assert.h>
+
 #include <algorithm>
 #include <map>
 #include <string>
@@ -45,7 +47,6 @@
 #include <vector>
 
 #include "base/option.h"
-#include <assert.h>
 
 using namespace std;
 

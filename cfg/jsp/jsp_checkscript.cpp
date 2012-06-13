@@ -38,14 +38,13 @@
 
 // $Header: /home/CVS/configurator/jsp/jsp_checkscript.cpp,v 1.18 2005/07/27 10:26:30 honda Exp $
 
-#include "jsp/jsp_defs.h"
-#include "jsp/jsp_common.h"
-
 #include <string>
 #include <iostream>
 
 #include "base/component.h"
 #include "base/mpstrstream.h"
+#include "jsp/jsp_common.h"
+#include "jsp/jsp_defs.h"
 
 using namespace std;
 using namespace ToppersJsp;

@@ -40,8 +40,8 @@
 
 #include "base/garbage.h"
 
-#include <stdexcept>
 #include <algorithm>
+#include <stdexcept>
 
 using namespace std;
 

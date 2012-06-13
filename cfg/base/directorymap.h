@@ -45,17 +45,17 @@
     #pragma warning(disable:4786)
 #endif
 
-#include "base/message.h"
-#include "base/garbage.h"
-#include "base/singleton.h"
-
   //MSVC6.0が <cstdio> してもstdに入れてくれないので
 #include <stdio.h>
 
-#include <string>
-#include <map>
-#include <iostream>
 #include <cstring>
+#include <iostream>
+#include <map>
+#include <string>
+
+#include "base/garbage.h"
+#include "base/message.h"
+#include "base/singleton.h"
 
 class Directory : public std::map<std::string, Directory *>
 {

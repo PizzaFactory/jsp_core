@@ -38,6 +38,8 @@
 
 // $Header: /home/CVS/configurator/jsp/jsp_parser.cpp,v 1.60 2004/09/09 19:22:41 takayuki Exp $
 
+#include <stdarg.h>
+
 #include <algorithm>
 #include <cctype>
 #include <iomanip>
@@ -45,8 +47,6 @@
 #include <set>
 #include <string>
 #include <utility>
-
-#include <stdarg.h>
 
 #include "jsp/jsp_defs.h"
 #include "base/parser.h"

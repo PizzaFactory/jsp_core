@@ -41,11 +41,11 @@
 #ifndef CFG_BASE_COLLECTION_H_
 #define CFG_BASE_COLLECTION_H_
 
-#include "base/testsuite.h"
-#include "base/singleton.h"
-
 #include <typeinfo>
 #include <list>
+
+#include "base/singleton.h"
+#include "base/testsuite.h"
 
     //Collectionに登録したいオブジェクトのクラスの基底クラス
 class Collectable

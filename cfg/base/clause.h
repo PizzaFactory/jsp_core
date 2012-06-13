@@ -41,13 +41,14 @@
 #ifndef CFG_BASE_CLAUSE_H_
 #define CFG_BASE_CLAUSE_H_
 
-#include "base/testsuite.h"
-#include "base/parser.h"
-#include "base/singleton.h"
-#include "base/except.h"
-
 #include <map>
 #include <string>
+
+#include "base/except.h"
+#include "base/parser.h"
+#include "base/singleton.h"
+#include "base/testsuite.h"
+
 
 #define INTEGER_CLAUSE_IDENTIFIER   "##INTEGER" //2連の#と識別子を一気に取り出すことはできないので名前が重なることはない
 #define LITERAL_CLAUSE_IDENTIFIER   "##STRING"

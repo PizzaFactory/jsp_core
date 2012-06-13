@@ -37,15 +37,15 @@
  */
 
 
+#include <map>
+#include <string>
+
 #include "base/filecontainer.h"
 
 #include "base/message.h"
 
 #include "bfd.h"
 #include "libiberty.h"
-
-#include <string>
-#include <map>
 
 using namespace std;
 

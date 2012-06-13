@@ -42,16 +42,17 @@
 #pragma warning(disable:4786) //デバッグ文字列を255文字に切り詰めた
 #endif
 
-#include "base/filecontainer.h"
-#include <string>
-#include <map>
-#include <fstream>
 #include <cassert>
 #include <cctype>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
+#include <map>
+#include <string>
 #include <utility>
+
+#include "base/filecontainer.h"
 
 #define _isspace(x)  isspace(x)
 #define _isprint(x)  isprint(x)

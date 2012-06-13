@@ -46,14 +46,14 @@
 #  pragma warning(disable:4786) //デバッグ情報で識別子が255文字に切り捨てられました。
 #endif
 
-#include <string>
-#include <sstream>
 #include <stdarg.h>
 #include <stdexcept>
+#include <string>
+#include <sstream>
 
 //#include "base/testsuite.h"
-#include "base/singleton.h"
 #include "base/except.h"
+#include "base/singleton.h"
 
     /*
      *   文字列整形ヘルパークラス

@@ -42,13 +42,13 @@
 #include <map>
 #include <string>
 
-#include "base/testsuite.h"
-#include "base/singleton.h"
+#include "base/collection.h"
+#include "base/directorymap.h"
 #include "base/except.h"
 #include "base/message.h"
 #include "base/option.h"
-#include "base/collection.h"
-#include "base/directorymap.h"
+#include "base/testsuite.h"
+#include "base/singleton.h"
 
 #ifndef CFG_BASE_COMPONENT_H_
 #define CFG_BASE_COMPONENT_H_

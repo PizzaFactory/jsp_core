@@ -40,10 +40,12 @@
 
 #pragma warning(disable:4786)
 
-#include "base/filecontainer.h"
-#include <windows.h>
 #include <imagehlp.h>
+#include <windows.h>
+
 #include <string>
+
+#include "base/filecontainer.h"
 
 using namespace std;
 

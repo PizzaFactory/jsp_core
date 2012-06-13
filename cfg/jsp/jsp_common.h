@@ -42,15 +42,13 @@
 #ifndef CFG_JSP_JSP_COMMON_H_
 #define CFG_JSP_JSP_COMMON_H_
 
-#include "base/testsuite.h"
-
-#include "base/mpstrstream.h"
-#include "base/collection.h"
-#include "base/except.h"
-#include "base/event.h"
-
 #include <string>
 
+#include "base/collection.h"
+#include "base/event.h"
+#include "base/except.h"
+#include "base/mpstrstream.h"
+#include "base/testsuite.h"
 
 namespace ToppersJsp {
 

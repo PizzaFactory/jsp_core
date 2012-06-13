@@ -47,14 +47,14 @@
 */
 
 
+#include <stdarg.h>
+
 #include <cassert>
 #include <cstdio>
 #include <map>
 #include <string>
 #include <typeinfo>
 #include <utility>
-
-#include <stdarg.h>
 
 #include "base/directorymap.h"
 #include "base/message.h"

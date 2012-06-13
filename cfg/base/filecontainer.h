@@ -45,14 +45,14 @@
 #pragma warning(disable:4786) //デバッグ情報を255文字に切り詰めました
 #endif
 
-#include "testsuite.h"
-
 #include <string>
 #include <map>
 
+#include "base/collection.h"
 #include "base/except.h"
 #include "base/message.h"
-#include "base/collection.h"
+
+#include "testsuite.h"
 
 class FileContainer : public RuntimeObject
 {

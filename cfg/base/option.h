@@ -41,12 +41,12 @@
 #ifndef CFG_BASE_OPTION_H_
 #define CFG_BASE_OPTION_H_
 
-#include "base/testsuite.h"
-#include "base/singleton.h"
-
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
+
+#include "base/singleton.h"
+#include "base/testsuite.h"
 
 #define DEFAULT_PARAMETER "#default"
 

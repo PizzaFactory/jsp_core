@@ -41,10 +41,10 @@
 #ifndef CFG_BASE_EVENT_H_
 #define CFG_BASE_EVENT_H_
 
-#include "base/testsuite.h"
-#include "base/singleton.h"
-
 #include <list>
+
+#include "base/singleton.h"
+#include "base/testsuite.h"
 
     //イベントフックの取りまとめ役
 template<typename T>

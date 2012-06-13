@@ -50,12 +50,10 @@
 #include <string>
 #include <sstream>
 
-#include "base/defs.h"
-
-#include "base/message.h"
-
-#include "base/directorymap.h"
 #include "base/component.h"
+#include "base/defs.h"
+#include "base/directorymap.h"
+#include "base/message.h"
 
 #define PARSERESULT         "/parse_result"
 

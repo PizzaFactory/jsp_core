@@ -39,9 +39,8 @@
 #include <ctime>
 #include <string>
 
-#include "jsp/jsp_common.h"
-
 #include "base/option.h"
+#include "jsp/jsp_common.h"
 
 #if defined(_MSC_VER) || defined(__BORLANDC__)
 #  define  GETLOGINNAME_WINDOWS

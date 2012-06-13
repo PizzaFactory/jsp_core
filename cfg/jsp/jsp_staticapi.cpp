@@ -41,10 +41,9 @@
 #include <iostream>
 #include <string>
 
-#include "jsp/jsp_defs.h"
-
 #include "base/parser.h"
 #include "base/mpstrstream.h"
+#include "jsp/jsp_defs.h"
 
 using namespace std;
 

@@ -47,9 +47,10 @@
 #  pragma warning(disable:4786) //デバッグ情報で識別子が255文字に切り捨てられました。
 #endif
 
-#include "base/testsuite.h"
 #include <list>
 #include <cstddef>
+
+#include "base/testsuite.h"
 
     //動的に生成したオブジェクトをちゃんと破棄するためのゴミ箱ルーチン
 class TrashBox

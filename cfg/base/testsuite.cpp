@@ -41,10 +41,10 @@
 #include <list>
 #include <string>
 
-#include "base/testsuite.h"
-
 #include "base/coverage_defs.h"
 #include "base/coverage_undefs.h"
+
+#include "base/testsuite.h"
 
 #ifdef TESTSUITE
 
