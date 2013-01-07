@@ -196,7 +196,7 @@ chg_ipm(IPM ipm)
     
     LOG_CHG_IPM_ENTER(ipm);
 	CHECK_TSKCTX_UNL();
-	CHECK_PAR(0 <= ipm && ipm <= MAX_IPM - 1);
+	CHECK_PAR(ipm <= MAX_IPM - 1);
 
 	t_lock_cpu();
 	task_intmask = (ipm << 4);
