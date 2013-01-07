@@ -302,13 +302,13 @@ st16c2550_opn_por(ID siopid, VP_INT exinf)
     /*
      * 初期化
      */
-    st16c2550_init_siopinib(siopcb->siopinib);
+    st16c2550_init_siopinib(siopinib);
     
     /* 受信割込み許可 */
-    st16c_write(siopcb->siopinib->reg_base, ST16C_IER, IER_RX);
+    st16c_write(siopinib->reg_base, ST16C_IER, IER_RX);
     
     /* 割込み線をイネーブル */
-    st16c_write(siopcb->siopinib->reg_base, ST16C_MCR, MCR_INT_ENABLE);
+    st16c_write(siopinib->reg_base, ST16C_MCR, MCR_INT_ENABLE);
 
     siopcb->exinf = exinf;
     siopcb->getready = siopcb->putready = FALSE;
