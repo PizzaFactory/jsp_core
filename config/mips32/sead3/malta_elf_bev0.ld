@@ -78,23 +78,23 @@ SECTIONS
 	__isdata_start = .;
 	.sdata . : AT ( __idata_start + SIZEOF(.data) )
 	{
-		*(.lit8) 
-		*(.lit4) 
-		*(.sdata) 
+		*(.lit8)
+		*(.lit4)
+		*(.sdata)
 		. = ALIGN(4);
 	} > RW_KSEG0
 	__idata_end = __idata_start + SIZEOF(.data) + SIZEOF(.sdata);
 
 	__bss_start = .	;
 
-	.sbss : 
+	.sbss :
 	{
 		_fbss = . ;
 		*(.sbss)
 		*(.scommon)
 	} > RW_KSEG0
 
-	.bss : 
+	.bss :
 	{
 		*(.bss)
 		*(COMMON)
