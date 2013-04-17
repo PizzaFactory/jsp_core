@@ -44,7 +44,7 @@ CXX = g++
 #
 #  コンパイルオプションの定義
 #
-CXXFLAGS = -g -O2 -Wall
+CXXFLAGS = -g -O2 -Wall -W
 INCLUDES = -I.
 
 #
