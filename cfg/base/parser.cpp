@@ -535,7 +535,7 @@ bool Parser::getOperator(Token & token, int ch)
     const char * work;
 
         /* chがオペレータ文字であるかどうか確かめる */
-    for(work = Operator;*work != '\x0' && *work != ch;work++);
+    for(work = Operator; *work != '\x0' && *work != ch;work++);
     if(*work == '\x0')
         return false;
 
@@ -543,7 +543,7 @@ bool Parser::getOperator(Token & token, int ch)
     do {
         token += static_cast<char>(ch);
         ch = getChar();
-        for(work = Operator;*work != '\x0' && *work != ch;work++);
+        for(work = Operator; *work != '\x0' && *work != ch;work++);
     } while(*work != '\x0');
 
     putBack(ch);
