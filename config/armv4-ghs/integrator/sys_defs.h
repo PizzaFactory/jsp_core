@@ -108,7 +108,7 @@ extern ER	vxget_tim(SYSUTIM *p_sysutim) throw();
  */
 
 Inline void
-kernel_abort()
+kernel_abort(void)
 {
    while(1);
 }

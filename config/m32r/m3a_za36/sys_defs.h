@@ -121,7 +121,8 @@ typedef	unsigned char INTNO;		/* 割込み番号 */
  */
 typedef	unsigned long SYSUTIM;	/* 性能評価用システム時刻 */
 
-Inline void kernel_abort(void)
+Inline void
+kernel_abort(void)
 {
     extern void _kernel_sys_exit(void);
     _kernel_sys_exit();

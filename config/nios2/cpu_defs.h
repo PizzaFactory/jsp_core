@@ -141,7 +141,7 @@ _enaint_()
  * システムの中断処理
  */
 Inline void
-kernel_abort()
+kernel_abort(void)
 {
 
 }

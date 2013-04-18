@@ -95,7 +95,7 @@
  */
 #ifdef GDB_STUB
 Inline void
-kernel_abort()
+kernel_abort(void)
 {
     Asm("trapa #0xff");
 }
@@ -103,7 +103,7 @@ kernel_abort()
 #else /* GDB_STUB */
 
 Inline void
-kernel_abort()
+kernel_abort(void)
 {
 
 }

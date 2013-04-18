@@ -65,7 +65,7 @@ extern ER   vxget_tim(SYSUTIM *pk_sysutim) throw();
 #ifndef _MACRO_ONLY
 
 Inline void
-kernel_abort()
+kernel_abort(void)
 {
    while(1);
 }
