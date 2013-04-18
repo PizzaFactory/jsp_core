@@ -99,7 +99,7 @@ extern ER   vxget_tim(SYSUTIM *pk_sysutim);
  * システムの中断処理
  */
 Inline void
-kernel_abort()
+kernel_abort(void)
 {
      while(1);
 }

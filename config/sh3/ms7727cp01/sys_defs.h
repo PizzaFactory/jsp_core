@@ -128,7 +128,7 @@
 
 
 Inline void
-kernel_abort()
+kernel_abort(void)
 {
     UW sr = 0x10000000;
     

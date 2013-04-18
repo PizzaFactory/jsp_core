@@ -84,7 +84,7 @@ extern ER	ena_int(INTNO intno) throw();
 #ifdef GDB_STUB
 
 Inline void
-kernel_abort()
+kernel_abort(void)
 {
 	/* テストしていない */
 	Asm("trapa #0x20"::);
@@ -93,7 +93,7 @@ kernel_abort()
 #else /* GDB_STUB */
 
 Inline void
-kernel_abort()
+kernel_abort(void)
 {
 	while(1);
 }

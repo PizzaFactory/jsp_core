@@ -91,7 +91,7 @@ extern	ER	vxget_tim(SYSUTIM *pk_sysutim) throw();
  *  システムの停止処理
  */
 Inline void
-kernel_abort()
+kernel_abort(void)
 {
 	Asm("break");
 }

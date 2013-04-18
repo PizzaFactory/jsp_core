@@ -87,7 +87,7 @@ extern ER	vxget_tim(SYSUTIM *p_sysutim) throw();
 #ifdef GDB_STUB
 
 Inline void
-kernel_abort()
+kernel_abort(void)
 {
 	Asm("trap #2");
 }
@@ -95,7 +95,7 @@ kernel_abort()
 #else /* GDB_STUB */
 
 Inline void
-kernel_abort()
+kernel_abort(void)
 {
 	Asm("clr.l %%d0; trap #3"
 	  : /* no output */

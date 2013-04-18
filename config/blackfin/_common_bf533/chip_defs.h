@@ -77,7 +77,7 @@
  */
 
 Inline void
-kernel_abort()
+kernel_abort(void)
 {
 }
 

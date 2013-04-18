@@ -83,7 +83,7 @@ extern  ER	ena_int(INTNO intno);
  *  システムの停止処理
  */
 Inline void
-kernel_abort()
+kernel_abort(void)
 {
     exit(1);
 }

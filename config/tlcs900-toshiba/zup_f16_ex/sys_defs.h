@@ -115,7 +115,7 @@ extern void start(void);
  */
 #pragma inline kernel_abort
 void
-kernel_abort()
+kernel_abort(void)
 {
 	start();
 	/* リスタート */

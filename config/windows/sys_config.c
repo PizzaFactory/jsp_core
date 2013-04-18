@@ -94,7 +94,8 @@ sys_putc(char c)
 /*
  *  システムアボートハンドラ
  */
-void kernel_abort(void)
+void
+kernel_abort(void)
 {
 	extern void kernel_exit();
 	kernel_exit();
