@@ -97,7 +97,7 @@ kernel_start()
  *  カーネルの終了処理
  */
 void
-kernel_exit()
+kernel_exit(void)
 {
 	/*
 	 *  割込みを禁止
