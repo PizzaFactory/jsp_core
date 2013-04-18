@@ -59,7 +59,7 @@ extern const INHINIB	inhinib_table[];
 #ifdef __inhini
 
 void
-interrupt_initialize()
+interrupt_initialize(void)
 {
 	UINT		i;
 	const INHINIB	*inhinib;

@@ -72,7 +72,7 @@ UINT	syslog_lowmask;			/* 低レベル出力すべき重要度 */
  *  システムログ機能の初期化
  */
 void
-syslog_initialize()
+syslog_initialize(void)
 {
 	syslog_count = 0;
 	syslog_head = syslog_tail = 0;

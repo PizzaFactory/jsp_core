@@ -78,7 +78,7 @@ extern SEMCB	semcb_table[];
 #ifdef __semini
 
 void
-semaphore_initialize()
+semaphore_initialize(void)
 {
 	UINT	i;
 	SEMCB	*semcb;

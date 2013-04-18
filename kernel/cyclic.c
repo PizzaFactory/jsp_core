@@ -83,7 +83,7 @@ typedef void	(*CYCHDR)(VP_INT exinf);
 #ifdef __cycini
 
 void
-cyclic_initialize()
+cyclic_initialize(void)
 {
 	UINT	i;
 	CYCCB	*cyccb;
