@@ -85,7 +85,7 @@ UINT	ready_primap;
  *  タスク管理モジュールの初期化
  */
 void
-task_initialize()
+task_initialize(void)
 {
 	UINT	i, j;
 	TCB	*tcb;

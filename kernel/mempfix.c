@@ -90,7 +90,7 @@ typedef struct fixed_memorypool_waiting_information {
 #ifdef __mpfini
 
 void
-mempfix_initialize()
+mempfix_initialize(void)
 {
 	UINT	i;
 	MPFCB	*mpfcb;

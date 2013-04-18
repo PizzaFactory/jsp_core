@@ -60,7 +60,7 @@ extern const EXCINIB	excinib_table[];
 #ifdef __excini
 
 void
-exception_initialize()
+exception_initialize(void)
 {
 	UINT		i;
 	const EXCINIB	*excinib;

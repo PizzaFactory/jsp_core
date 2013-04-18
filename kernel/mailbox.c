@@ -87,7 +87,7 @@ typedef struct mailbox_waiting_information {
 #ifdef __mbxini
 
 void
-mailbox_initialize()
+mailbox_initialize(void)
 {
 	UINT	i;
 	MBXCB	*mbxcb;
