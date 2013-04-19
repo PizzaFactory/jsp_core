@@ -311,9 +311,9 @@ gdb_stub_exit(void)
 Inline int
 gdb_stub_putc(int c)
 {
-	Asm("mov   #0x00,r0
-	     mov   %0,r4
-	     trapa #0x21"
+	Asm("mov   #0x00,r0"
+	    "mov   %0,r4"
+	    "trapa #0x21"
                : /* no output */
                : "r"(c)
                : "r0","r4");
