@@ -58,7 +58,7 @@
 hardware_init_hook:
 
 	/* システムウェイトコントロールレジスタ：5MHz×4=20MHz時 */
-	Set(VSWC,  0x01,   b)
+	Set(VSWC,  0x01,b)
 	/* 保護された特定レジスタへのアクセス
 	   プロセッサクロックコントロールレジスタ：メインクロックのfxx出力(PCC=0) */
 	lea	PRCMD, r6
@@ -70,22 +70,22 @@ hardware_init_hook:
 	nop
 	nop
 	nop
-	Set(PLLCTL,0x03,   h)   /* PLLコントロールレジスタ：PLL動作 */
-	Set(WDTM2, 0x07,   b)   /* WDTM2 stop */
+	Set(PLLCTL,0x03,h)   /* PLLコントロールレジスタ：PLL動作 */
+	Set(WDTM2, 0x07,b)   /* WDTM2 stop */
 #if 0
 	/* 外部バスの設定：
 	     CS0に外部SRAMを増設した場合の参考。ここではバスはセパレートバスで、
 	     12ns品のSRAMで0waitで動作することを仮定した設定。
 	 */
-	Set(EXIMC, 0x01,   b)	/* 外部バスインターフェイスモードレジスタ：セパレートバス */
-	Set(PMC9,  0xFFFF, h)	/* P9モードコントロールレジスタ：A0-A15出力 */
-	Set(PMCCS, 0x01,   b)	/* PCSモードコントロールレジスタ：C0出力 */
-	Set(PMCCT, 0x53,   b)	/* PCTモードコントロールレジスタ：RD/WR/ASTB出力 */
-	Set(PMCDH, 0xFF,   b)	/* PDHモードコントロールレジスタ：A16-A23出力 */
-	Set(PMCDL, 0xFFFF, h)	/* PDLモードコントロールレジスタ：AD0-AD15出力 */
-	Set(DWC0,  0x7770, h)	/* データウェイト制御レジスタ：CS0wait=0 */
-	Set(AWC,   0xFFFC, h)	/* アドレスウェイト制御レジスタ：CS0wait=0 */
-	Set(BCC,   0xAAA8, h)	/* バスサイクル制御レジスタ：CS0wait=0 */
+	Set(EXIMC, 0x01,b)	/* 外部バスインターフェイスモードレジスタ：セパレートバス */
+	Set(PMC9,  0xFFFF,h)	/* P9モードコントロールレジスタ：A0-A15出力 */
+	Set(PMCCS, 0x01,b)	/* PCSモードコントロールレジスタ：C0出力 */
+	Set(PMCCT, 0x53,b)	/* PCTモードコントロールレジスタ：RD/WR/ASTB出力 */
+	Set(PMCDH, 0xFF,b)	/* PDHモードコントロールレジスタ：A16-A23出力 */
+	Set(PMCDL, 0xFFFF,h)	/* PDLモードコントロールレジスタ：AD0-AD15出力 */
+	Set(DWC0,  0x7770,h)	/* データウェイト制御レジスタ：CS0wait=0 */
+	Set(AWC,   0xFFFC,h)	/* アドレスウェイト制御レジスタ：CS0wait=0 */
+	Set(BCC,   0xAAA8,h)	/* バスサイクル制御レジスタ：CS0wait=0 */
 #endif
 
 	jmp		r31
