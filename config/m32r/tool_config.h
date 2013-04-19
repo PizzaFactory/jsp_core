@@ -57,9 +57,10 @@ Inline void
 call_atexit()
 {
         extern void     software_term_hook(void);
+        void (*volatile fp)(void) = software_term_hook;
 
-        if (software_term_hook != 0) {
-                software_term_hook();
+        if (fp != 0) {
+                (*fp)();
         }
 }
 
