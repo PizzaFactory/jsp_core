@@ -923,7 +923,7 @@ void Parser::doPreProcess(const char * cmd)
     isHeadofLine = true;
 }
 #else
-void Parser::doPreProcess(const char * cmd)
+void Parser::doPreProcess(const char * cmd UNUSED_PARAM)
 {}
 #endif /* CALL_EXTERNAL_PROGRAM */
 
@@ -1169,7 +1169,7 @@ ParserComponent::ParserComponent(void) throw() : Component(PARSER)
 ParserComponent::~ParserComponent(void) throw()
 {}
 
-void ParserComponent::parseOption(Directory & container)
+void ParserComponent::parseOption(Directory & container UNUSED_PARAM)
 {
     if(findOption("h", "help"))
     {

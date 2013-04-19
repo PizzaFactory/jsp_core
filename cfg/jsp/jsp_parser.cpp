@@ -665,7 +665,7 @@ namespace {
     }
 }
 
-void ConfigurationFileGenerator::parseOption(Directory & parameter)
+void ConfigurationFileGenerator::parseOption(Directory & parameter UNUSED_PARAM)
 {
     string work;
 
@@ -718,7 +718,7 @@ void ConfigurationFileGenerator::parseOption(Directory & parameter)
     activateComponent();
 }
 
-void ConfigurationFileGenerator::onFatalExit(Directory & container)
+void ConfigurationFileGenerator::onFatalExit(Directory & container UNUSED_PARAM)
 {
         //例外で異常終了したら、ファイルを生成しない
     dynamic_cast<MultipartStream *>(RuntimeObjectTable::getInstance(typeid(KernelCfg)))->disableOutput();
