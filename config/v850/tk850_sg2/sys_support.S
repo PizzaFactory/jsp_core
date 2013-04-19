@@ -58,7 +58,7 @@
 hardware_init_hook:
 
 	/* システムウェイトコントロールレジスタ：5MHz×4=20MHz時 */
-	Set(VSWC,  0x01,   b)
+	Set(VSWC,  0x01,b)
 	nop
 	/* 保護された特定レジスタへのアクセス
 	   プロセッサクロックコントロールレジスタ：メインクロックのfxx出力(PCC=0) */
@@ -71,24 +71,24 @@ hardware_init_hook:
 	nop
 	nop
 	nop
-	Set(PLLCTL,0x03,   b)   /* PLLコントロールレジスタ：PLL動作 */
-	Set(WDTM2, 0x07,   b)   /* WDTM2 stop */
+	Set(PLLCTL,0x03,b)   /* PLLコントロールレジスタ：PLL動作 */
+	Set(WDTM2, 0x07,b)   /* WDTM2 stop */
 	/* 外部バスの設定 */
-	Set(EXIMC, 0x01,   b)	/* 外部バスインターフェイスモードレジスタ：セパレートバス */
-	Set(PMC9,  0xFFFF, h)	/* P9モードコントロールレジスタ：A0-A15出力 */
-	Set(PMCCM, 0x02,   b)	/* PCMモードコントロールレジスタ：Clock Out出力 */
-	Set(PMCCT, 0x11,   b)	/* PCTモードコントロールレジスタ：RD/WR0出力 */
-	Set(PMCDL, 0xFFFF, h)	/* PDLモードコントロールレジスタ：AD0-AD15出力 */
-	Set(BSC,   0x5555, h)	/* バスサイズレジスタ：All 16bit */
-	Set(DWC0,  0x0000, h)	/* データウェイト制御レジスタ：wait=0 */
-	Set(AWC,   0xFF00, h)	/* アドレスウェイト制御レジスタ：wait=0 */
-	Set(BCC,   0xAA00, h)	/* バスサイクル制御レジスタ：wait=0 */
+	Set(EXIMC, 0x01,b)	/* 外部バスインターフェイスモードレジスタ：セパレートバス */
+	Set(PMC9,  0xFFFF,h)	/* P9モードコントロールレジスタ：A0-A15出力 */
+	Set(PMCCM, 0x02,b)	/* PCMモードコントロールレジスタ：Clock Out出力 */
+	Set(PMCCT, 0x11,b)	/* PCTモードコントロールレジスタ：RD/WR0出力 */
+	Set(PMCDL, 0xFFFF,h)	/* PDLモードコントロールレジスタ：AD0-AD15出力 */
+	Set(BSC,   0x5555,h)	/* バスサイズレジスタ：All 16bit */
+	Set(DWC0,  0x0000,h)	/* データウェイト制御レジスタ：wait=0 */
+	Set(AWC,   0xFF00,h)	/* アドレスウェイト制御レジスタ：wait=0 */
+	Set(BCC,   0xAA00,h)	/* バスサイクル制御レジスタ：wait=0 */
 	/* NIC設定 */
-	Set(PMC0,  0x10,   b)	/* P04=INTP1 */
-	Set(PMCT,  0xBF,   b)	/* ASTB=out(LAN CS) */
-	Set(PCT,   0x00,   b)	/* ASTB=Low out */
-	Set(PM5,   0xFD,   b)	/* LAN Reset out */
-	Set(P5 ,   0x00,   b)	/* LAN Reset out */
+	Set(PMC0,  0x10,b)	/* P04=INTP1 */
+	Set(PMCT,  0xBF,b)	/* ASTB=out(LAN CS) */
+	Set(PCT,   0x00,b)	/* ASTB=Low out */
+	Set(PM5,   0xFD,b)	/* LAN Reset out */
+	Set(P5 ,   0x00,b)	/* LAN Reset out */
 
 	jmp		r31
 
