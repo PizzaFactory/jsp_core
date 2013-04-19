@@ -404,7 +404,7 @@ asm(".text;								  "\
  *  CPU例外の発生した時のコンテキストの参照
  */
 Inline BOOL
-exc_sense_context(VP p_excinf)
+exc_sense_context(VP p_excinf __attribute__((unused)))
 {
 	/* 
 	 *  １と比較するのは、現在実行中のCPU例外の分
