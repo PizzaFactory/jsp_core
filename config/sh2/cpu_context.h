@@ -60,7 +60,7 @@
  *  定する処理を，create_context と activate_context で行えばよい．
  */
 Inline void
-create_context(TCB *tcb)
+create_context(TCB *tcb __attribute__((unused)))
 {
 	Asm("nop");
 }
