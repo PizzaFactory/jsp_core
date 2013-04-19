@@ -97,4 +97,10 @@
 
 #endif /* CALL_EXTERNAL_PROGRAM */
 
+#ifdef __GNUC__
+#  define UNUSED_PARAM __attribute__((unused))
+#else
+#  define UNUSED_PARAM
+#endif
+
 #endif  // CFG_BASE_DEFS_H_

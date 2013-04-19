@@ -56,6 +56,7 @@
 #include <typeinfo>
 #include <utility>
 
+#include "base/defs.h"
 #include "base/directorymap.h"
 #include "base/message.h"
 
@@ -67,7 +68,7 @@ using namespace std;
 
 int Directory::defaultflag = Directory::NOTHING;
 
-Directory::Directory(const Directory & src)
+Directory::Directory(const Directory & src UNUSED_PARAM)
 {
     parent = 0;
     flag = defaultflag;

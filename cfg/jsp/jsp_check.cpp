@@ -287,7 +287,7 @@ bool ConfigurationChecker::check_taskblock(Directory & parameter, FileContainer 
     return old_error_count == error_count;
 }
 
-bool ConfigurationChecker::check_semaphoreblock(Directory & parameter, FileContainer * container)
+bool ConfigurationChecker::check_semaphoreblock(Directory & parameter, FileContainer * container UNUSED_PARAM)
 {
     unsigned int id;
     unsigned int old_error_count = error_count;
@@ -333,7 +333,7 @@ bool ConfigurationChecker::check_semaphoreblock(Directory & parameter, FileConta
 }
 
 
-bool ConfigurationChecker::check_eventflagblock(Directory & parameter, FileContainer * container)
+bool ConfigurationChecker::check_eventflagblock(Directory & parameter, FileContainer * container UNUSED_PARAM)
 {
     unsigned int id;
     unsigned int old_error_count = error_count;
@@ -371,7 +371,7 @@ bool ConfigurationChecker::check_eventflagblock(Directory & parameter, FileConta
 }
 
 
-bool ConfigurationChecker::check_dataqueueblock(Directory & parameter, FileContainer * container)
+bool ConfigurationChecker::check_dataqueueblock(Directory & parameter, FileContainer * container UNUSED_PARAM)
 {
     unsigned int id;
     unsigned int old_error_count = error_count;
@@ -459,7 +459,7 @@ bool ConfigurationChecker::check_mailboxblock(Directory & parameter, FileContain
     return old_error_count == error_count;
 }
 
-bool ConfigurationChecker::check_fixed_memorypoolblock(Directory & parameter, FileContainer * container)
+bool ConfigurationChecker::check_fixed_memorypoolblock(Directory & parameter, FileContainer * container UNUSED_PARAM)
 {
     unsigned int id;
     unsigned int old_error_count = error_count;
@@ -566,7 +566,7 @@ bool ConfigurationChecker::check_cyclic_handlerblock(Directory & parameter, File
     return old_error_count == error_count;
 }
 
-bool ConfigurationChecker::check_interrupt_handlerblock(Directory & parameter, FileContainer * container)
+bool ConfigurationChecker::check_interrupt_handlerblock(Directory & parameter, FileContainer * container UNUSED_PARAM)
 {
     unsigned int id;
     unsigned int old_error_count = error_count;
@@ -609,7 +609,7 @@ bool ConfigurationChecker::check_interrupt_handlerblock(Directory & parameter, F
     return old_error_count == error_count;
 }
 
-bool ConfigurationChecker::check_exception_handlerblock(Directory & parameter, FileContainer * container)
+bool ConfigurationChecker::check_exception_handlerblock(Directory & parameter, FileContainer * container UNUSED_PARAM)
 {
     unsigned int id;
     unsigned int old_error_count = error_count;

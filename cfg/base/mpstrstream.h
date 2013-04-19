@@ -47,6 +47,7 @@
 #endif
 
 #include "testsuite.h"
+#include "base/defs.h"
 #include "base/except.h"
 #include "base/message.h"
 #include "base/event.h"
@@ -125,7 +126,7 @@ protected:
     bool                dirty;          //ファイルに出力する要あらばtrue (何か書き込んだら... ではなく、まだ出力してないかどうか)
     bool                output;         //出力しても良いならtrue
 
-    virtual void handler(ShutdownEvent & evt)
+    virtual void handler(ShutdownEvent & evt UNUSED_PARAM)
     {   serialize();    }
   
 public:
