@@ -1964,7 +1964,6 @@ ercd で示されるメインエラーコードに対応するエラーコードの文字列を返す．
 
     doc/
         user.txt        TOPPERS/JSPカーネル ユーザズマニュアル
-        gnu_install.txt GNU開発環境構築マニュアル
         m68k.txt        M68040 ターゲット依存部マニュアル
         sh1.txt         SH1 ターゲット依存部マニュアル
         sh2.txt         SH2 ターゲット依存部マニュアル
