@@ -39,7 +39,7 @@
  *  接的または間接的に生じたいかなる損害に関しても，その責任を負わない．
  */
 
-OUTPUT_FORMAT("coff-h8300")
+OUTPUT_FORMAT("elf32-h8300")
 OUTPUT_ARCH(h8300h)
 
 ENTRY("_start")
@@ -91,6 +91,7 @@ SECTIONS {
 	.rodata : {
 		. = ALIGN(4);
 		*(.rodata)
+		*(.rodata.*)
 	} >ex_ram
 
 	. = ALIGN(4);
