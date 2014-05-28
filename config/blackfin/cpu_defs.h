@@ -2,7 +2,7 @@
  *  TOPPERS/JSP Kernel
  *      Toyohashi Open Platform for Embedded Real-Time Systems/
  *      Just Standard Profile Kernel
- * 
+ *
  *  Copyright (C) 2000-2003 by Embedded and Real-Time Systems Laboratory
  *                              Toyohashi Univ. of Technology, JAPAN
  *
@@ -11,7 +11,7 @@
  *  Copyright (C) 2004,2006,2006 by Takemasa Nakamura
  *  Copyright (C) 2004 by Ujinosuke
  *
- *  上記著作権者は，以下の (1)〜(4) の条件か，Free Software Foundation 
+ *  上記著作権者は，以下の (1)〜(4) の条件か，Free Software Foundation
  *  によって公表されている GNU General Public License の Version 2 に記
  *  述されている条件を満たす場合に限り，本ソフトウェア（本ソフトウェア
  *  を改変したものを含む．以下同じ）を使用・複製・改変・再配布（以下，
@@ -32,18 +32,18 @@
  *        報告すること．
  *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
  *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
- * 
+ *
  *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
  *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，その適用可能性も
  *  含めて，いかなる保証も行わない．また，本ソフトウェアの利用により直
  *  接的または間接的に生じたいかなる損害に関しても，その責任を負わない．
- * 
- *  
+ *
+ *
  */
 
 
 /*
- *	プロセッサに依存するアプリケーション用資源の定義（BLACKfin用）
+ *  プロセッサに依存するアプリケーション用資源の定義（BLACKfin用）
  *
  *  このインクルードファイルは，kernel.h と sil.h でインクルードされる．
  *  他のファイルから直接インクルードすることはない．このファイルをイン
@@ -54,28 +54,50 @@
 #ifndef _CPU_DEFS_H_
 #define _CPU_DEFS_H_
 
-#define BLACKFIN			/* プロセッサ略称 */
+#define BLACKFIN            /* プロセッサ略称 */
+
+#define COPYRIGHT_CPU \
+"Copyright (C) 2004-2012 by TOPPERS/JSP for Blackfin project\n"\
+"            http://sourceforge.jp/projects/toppersjsp4bf/\n"
 
 
+/*
+ * Core MMR
+ */
+
+#define __IMASK 0xFFE02104
+#define __IPEND 0xFFE02108
+#define __EVT0     0xFFE02000
+
+#define __TCNTL    0xFFE03000
+#define __TPERIOD  0xFFE03004
+
+
+#define __pIMASK ((volatile unsigned long *)__IMASK)
+#define __pIPEND ((volatile unsigned long *)__IPEND)
+#define __pEVT0 ((volatile void * volatile) __EVT0)
+
+#define __pTCNTL ((volatile unsigned long *)__TCNTL)
+#define __pTPERIOD ((volatile unsigned long *)__TPERIOD)
 /*
  *  システム・インターフェース・レイヤー
  */
- 
+
 /*
  *  プロセッサのエンディアン
  */
-#define	SIL_ENDIAN	SIL_ENDIAN_LITTLE	/* リトルエンディアン */
+#define SIL_ENDIAN  SIL_ENDIAN_LITTLE   /* リトルエンディアン */
 
 
 /*
 * 割り込みロック制御
 */
 
-#define SIL_PRE_LOC		UINT _intmask_
-#define SIL_LOC_INT()	asm volatile ( "cli %0;": "=d"(_intmask_) )
-#define SIL_UNL_INT()	asm volatile ( "sti %0;": :"d"(_intmask_) )
- 
- 
+#define SIL_PRE_LOC     UINT _intmask_
+#define SIL_LOC_INT()   asm volatile ( "cli %0;": "=d"(_intmask_) )
+#define SIL_UNL_INT()   asm volatile ( "sti %0;": :"d"(_intmask_) )
+
+
 
 
 
@@ -84,8 +106,8 @@
 /*
  *  割込み／CPU例外ハンドラ番号の型
  */
-typedef	UINT	INHNO;		/* 割込みハンドラ番号 */
-typedef	UINT	EXCNO;		/* CPU例外ハンドラ番号 */
+typedef UINT    INHNO;      /* 割込みハンドラ番号 */
+typedef UINT    EXCNO;      /* CPU例外ハンドラ番号 */
 
 
 
@@ -103,25 +125,25 @@ void sil_dly_nse(UINT dlytim);
  *  性能評価用システム時刻の参照
  *  cycleカウンタから64ビットの値を取り出す。
  */
-typedef	long long	SYSUTIM;	/* 性能評価用システム時刻 */
+typedef long long   SYSUTIM;    /* 性能評価用システム時刻 */
 
-Inline  ER	vxget_tim(SYSUTIM *p_sysutim)
+Inline  ER  vxget_tim(SYSUTIM *p_sysutim)
 {
-	unsigned int lo, hi;
-	
-	Asm( "%0=CYCLES; %1=CYCLES2;" :"=d"(lo), "=d"(hi) );
-	((unsigned int *)p_sysutim)[0] = lo;
-	((unsigned int *)p_sysutim)[1] = hi;
-	return(0);
+    unsigned int lo, hi;
+
+    Asm( "%0=CYCLES; %1=CYCLES2;" :"=d"(lo), "=d"(hi) );
+    ((unsigned int *)p_sysutim)[0] = lo;
+    ((unsigned int *)p_sysutim)[1] = hi;
+    return(0);
 }
 
 /*
 * システム・メモリ・アクセス
 */
 
-#define sil_wrb_iop(iop, data)	sil_wrh_mem( iop, (UB)data )
-#define sil_wrh_iop	sil_wrh_mem
-#define sil_wrw_iop	sil_wrw_mem
+#define sil_wrb_iop(iop, data)  sil_wrh_mem( iop, (UB)data )
+#define sil_wrh_iop sil_wrh_mem
+#define sil_wrw_iop sil_wrw_mem
 #define sil_wrh_lep sil_wrh_lem
 #define sil_wrw_lep sil_wrw_lem
 #define sil_wrh_bep sil_wrh_bem

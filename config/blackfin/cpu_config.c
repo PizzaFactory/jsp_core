@@ -2,7 +2,7 @@
  *  TOPPERS/JSP Kernel
  *      Toyohashi Open Platform for Embedded Real-Time Systems/
  *      Just Standard Profile Kernel
- * 
+ *
  *  Copyright (C) 2000-2003 by Embedded and Real-Time Systems Laboratory
  *                              Toyohashi Univ. of Technology, JAPAN
  *
@@ -11,7 +11,7 @@
  *  Copyright (C) 2004,2006,2006 by Takemasa Nakamura
  *  Copyright (C) 2004 by Ujinosuke
  *
- *  上記著作権者は，以下の (1)〜(4) の条件か，Free Software Foundation 
+ *  上記著作権者は，以下の (1)〜(4) の条件か，Free Software Foundation
  *  によって公表されている GNU General Public License の Version 2 に記
  *  述されている条件を満たす場合に限り，本ソフトウェア（本ソフトウェア
  *  を改変したものを含む．以下同じ）を使用・複製・改変・再配布（以下，
@@ -32,19 +32,19 @@
  *        報告すること．
  *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
  *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
- * 
+ *
  *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
  *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，その適用可能性も
  *  含めて，いかなる保証も行わない．また，本ソフトウェアの利用により直
  *  接的または間接的に生じたいかなる損害に関しても，その責任を負わない．
- * 
- *  
+ *
+ *
  */
 
 
- 
+
 /*
- *	プロセッサ依存モジュール（BLACKfin用）
+ *  プロセッサ依存モジュール（BLACKfin用）
  */
 
 #include "jsp_kernel.h"
@@ -56,22 +56,32 @@
 */
 VP event_fp;
 
+/*
+ * GDBでデバッグ時にブートを行うかどうか制御する変数
+ * 通常は偽なので、ロード後、gdbで1に修正して使う
+ */
+#ifdef __GNUC__
+unsigned int enable_boot_for_gdb  __attribute__((section(".data"), used)) = 0;
+#elif defined(__ECC__)
+#else
+#error "Compiler is not supported"
+#endif
 
 static void dummy_exception_handler(VP exc_info);
 void (* exc_vector)(VP) = &dummy_exception_handler;
 void (* dev_vector[DEVICE_INTERRUPT_COUNT+3])(void) ;
 
 
-static void dummy_interrupt_handler(void)	
+static void dummy_interrupt_handler(void)
 {
-	while(1)
-		;
+    while(1)
+        ;
 }
 
-static void dummy_exception_handler(VP exc_info)	
+static void dummy_exception_handler(VP exc_info)
 {
-	while(1)
-		;
+    while(1)
+        ;
 }
 
 
@@ -81,10 +91,10 @@ static void dummy_exception_handler(VP exc_info)
 void
 cpu_initialize()
 {
-	int i;
-	
-	for ( i=0; i<DEVICE_INTERRUPT_COUNT+3; i++ )
-		dev_vector[i] = &dummy_interrupt_handler;
+    int i;
+
+    for ( i=0; i<DEVICE_INTERRUPT_COUNT+3; i++ )
+        dev_vector[i] = &dummy_interrupt_handler;
 }
 
 /*
@@ -93,7 +103,7 @@ cpu_initialize()
 void
 cpu_terminate()
 {
-	*pIMASK = 0;		/* 割り込み禁止 */
+    *__pIMASK = 0;      /* 割り込み禁止 */
 }
 
 

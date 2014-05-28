@@ -2,7 +2,7 @@
  *  TOPPERS/JSP Kernel
  *      Toyohashi Open Platform for Embedded Real-Time Systems/
  *      Just Standard Profile Kernel
- * 
+ *
  *  Copyright (C) 2000-2003 by Embedded and Real-Time Systems Laboratory
  *                              Toyohashi Univ. of Technology, JAPAN
  *
@@ -11,7 +11,7 @@
  *  Copyright (C) 2004,2006,2006 by Takemasa Nakamura
  *  Copyright (C) 2004 by Ujinosuke
  *
- *  上記著作権者は，以下の (1)〜(4) の条件か，Free Software Foundation 
+ *  上記著作権者は，以下の (1)〜(4) の条件か，Free Software Foundation
  *  によって公表されている GNU General Public License の Version 2 に記
  *  述されている条件を満たす場合に限り，本ソフトウェア（本ソフトウェア
  *  を改変したものを含む．以下同じ）を使用・複製・改変・再配布（以下，
@@ -32,18 +32,18 @@
  *        報告すること．
  *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
  *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
- * 
+ *
  *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
  *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，その適用可能性も
  *  含めて，いかなる保証も行わない．また，本ソフトウェアの利用により直
  *  接的または間接的に生じたいかなる損害に関しても，その責任を負わない．
- * 
- *  
+ *
+ *
  */
 
 
 /*
- *	プロセッサ依存のカーネル資源（BLACKfin用）
+ *  プロセッサ依存のカーネル資源（BLACKfin用）
  *
  *  このインクルードファイルは，t_config.h のみからインクルードされる．
  *  他のファイルから直接インクルードしてはならない．
@@ -68,26 +68,16 @@
 #else
 #error "Compiler is not supported"
 #endif
-/*
- *  BLACKfin関連ファイルの読み込み
- */
-#ifdef __GNUC__
-#include "cdef_lpblackfin.h"		/* gnu tool chain */
-#elif defined(__ECC__)
-#include <cdef_lpblackfin.h>	/* VisualDSP++ */
-#else
-#error "Compiler is not supported"
-#endif
 
 /*
 *  イベントプライオリティ宣言. sys_config.h の device_dispatcher()で使う。
 */
-#ifdef __GNUC__
+#ifndef ik_timer
 #define ik_timer 6
+#endif
+
+#ifndef ik_hardware
 #define ik_hardware_err 5
-#elif defined(__ECC__)
-#else
-#error "Compiler is not supported"
 #endif
 
 /*
@@ -96,11 +86,11 @@
 #include <cpu_rename.h>
 
 /*
-*	BLACKfinのビットマップ検索機能を使う
+*   BLACKfinのビットマップ検索機能を使う
 *   BLACKfinはMSBから数える。
 */
-#define	CPU_BITMAP_SEARCH
-#define	PRIMAP_BIT(pri)		(0x40000000u >> (pri))
+#define CPU_BITMAP_SEARCH
+#define PRIMAP_BIT(pri)     (0x40000000u >> (pri))
 
 
 /*
@@ -109,12 +99,12 @@
  *  cpu_context.h に入れる方がエレガントだが，参照の依存性の関係で，
  *  cpu_context.h には入れられない．
  */
-#define	TBIT_TCB_TSTAT		8	/* tstat フィールドのビット幅 */
-#define	TBIT_TCB_PRIORITY	8	/* priority フィールドのビット幅 */
+#define TBIT_TCB_TSTAT      8   /* tstat フィールドのビット幅 */
+#define TBIT_TCB_PRIORITY   8   /* priority フィールドのビット幅 */
 
 
 /*
-*	BLACKfinのIMASKへの設定パターン
+*   BLACKfinのIMASKへの設定パターン
 *
 */
 #define IMASK_LOCK   0xc01f
@@ -135,24 +125,24 @@
 Inline UINT
 bitmap_search(UINT bitmap)
 {
-	UINT	numOfSign;
+    UINT    numOfSign;
 
-	/*
-	 *  このコードは，bitmap（UINT型）が32ビットであることを仮定し
-	 *  ている．Signbits 命令は32ビット整数を取ってMSBから連続する
-	 *  符号ビット - 1 を返す。all 0のときは31を返す。LSBのみが1の
-	 *  ときは30を返す。
-	 */
-#ifdef __GNUC__			// gcc
-	// gcc 3.4.1 の時点では、オペランドに下位ハーフレジスタを指定
-	// できないため、余計なコードが必要になる。
-	Asm( "r0.L=signbits %1; %0 = r0.L;": "=d"(numOfSign) : "d"(bitmap) : "R0" );
-#elif defined(__ECC__)	// visualdsp
-	Asm( "%0=signbits %1;": "=l"(numOfSign) : "d"(bitmap) );
+    /*
+     *  このコードは，bitmap（UINT型）が32ビットであることを仮定し
+     *  ている．Signbits 命令は32ビット整数を取ってMSBから連続する
+     *  符号ビット - 1 を返す。all 0のときは31を返す。LSBのみが1の
+     *  ときは30を返す。
+     */
+#ifdef __GNUC__         // gcc
+    // gcc 3.4.1 の時点では、オペランドに下位ハーフレジスタを指定
+    // できないため、余計なコードが必要になる。
+    Asm( "r0.L=signbits %1; %0 = r0.L;": "=d"(numOfSign) : "d"(bitmap) : "R0" );
+#elif defined(__ECC__)  // visualdsp
+    Asm( "%0=signbits %1;": "=l"(numOfSign) : "d"(bitmap) );
 #else
 #error "Compiler is not supported"
 #endif
-	return( numOfSign );
+    return( numOfSign );
 }
 
 
@@ -161,23 +151,23 @@ bitmap_search(UINT bitmap)
  *  タスクコンテキストブロックの定義
  */
 typedef struct task_context_block {
-	VP	sp;		/* スタックポインタ */
-	FP	pc;		/* プログラムカウンタ */
+    VP  sp;     /* スタックポインタ */
+    FP  pc;     /* プログラムカウンタ */
 } CTXB;
 
 
 /*
  *  システム状態参照
- *	返す値は以下のとおり
- *	TRUE : 非タスクコンテキスト
- *	FALSE: タスクコンテキスト
- *				IPENDが$8000か$8010の時、タスクコンテキストである。それ以外のときは非タスクコンテキスト。
+ *  返す値は以下のとおり
+ *  TRUE : 非タスクコンテキスト
+ *  FALSE: タスクコンテキスト
+ *              IPENDが$8000か$8010の時、タスクコンテキストである。それ以外のときは非タスクコンテキスト。
  */
 
 Inline BOOL
 sense_context()
 {
-	return( *pIPEND & 0x7FEF );
+    return( *__pIPEND & 0x7FEF );
 }
 
 /*
@@ -188,14 +178,14 @@ Inline BOOL
 sense_lock()
 {
 #ifdef UNMANAGED_INT
-	return((*pIMASK & ~UNMANAGED_INT )== 0xC01F );
+    return((*__pIMASK & ~UNMANAGED_INT )== 0xC01F );
 #else
-	return(*pIMASK == 0xC01F );
+    return(*__pIMASK == 0xC01F );
 #endif
 }
 
-#define t_sense_lock	sense_lock
-#define i_sense_lock	sense_lock
+#define t_sense_lock    sense_lock
+#define i_sense_lock    sense_lock
 
 
 /*
@@ -207,7 +197,7 @@ sense_lock()
  */
 
 #ifdef SUPPORT_CHG_IPM
-extern UH	task_intmask;	/* タスクコンテキストでの割込みマスク */
+extern UH   task_intmask;   /* タスクコンテキストでの割込みマスク */
 #endif /* SUPPORT_CHG_IPM */
 
 #ifdef UNMANAGED_INT
@@ -223,12 +213,12 @@ Inline void
 t_lock_cpu()
 {
 #ifdef UNMANAGED_INT
-	unsigned int imask;
-	Asm( "cli %0;" :"=d"(imask) );
-	Asm( "sti %0;" : :"d"(0xC01f | (imask & UNMANAGED_INT) ) );
+    unsigned int imask;
+    Asm( "cli %0;" :"=d"(imask) );
+    Asm( "sti %0;" : :"d"(0xC01f | (imask & UNMANAGED_INT) ) );
 #else
     Asm( "cli r0;" : : :"R0" );
-	Asm( "sti %0;" : :"d"(0xC01F) );
+    Asm( "sti %0;" : :"d"(0xC01F) );
 #endif
 }
 
@@ -236,11 +226,11 @@ Inline void
 t_unlock_cpu()
 {
 #ifdef UNMANAGED_INT
-	unsigned int imask;
-	Asm( "cli %0;" :"=d"(imask) );
-	Asm( "sti %0;" : :"d"( (0xffff & ~UNMANAGED_INT) | (imask & UNMANAGED_INT) ) );
+    unsigned int imask;
+    Asm( "cli %0;" :"=d"(imask) );
+    Asm( "sti %0;" : :"d"( (0xffff & ~UNMANAGED_INT) | (imask & UNMANAGED_INT) ) );
 #else
-	Asm( "sti %0;" : :"d"(0xffff) );
+    Asm( "sti %0;" : :"d"(0xffff) );
 #endif
 }
 
@@ -253,12 +243,12 @@ Inline void
 i_lock_cpu()
 {
 #ifdef UNMANAGED_INT
-	unsigned int imask;
-	Asm( "cli %0;" :"=d"(imask) );
-	Asm( "sti %0;" : :"d"(0xC01f | (imask & UNMANAGED_INT) ) );
+    unsigned int imask;
+    Asm( "cli %0;" :"=d"(imask) );
+    Asm( "sti %0;" : :"d"(0xC01f | (imask & UNMANAGED_INT) ) );
 #else
     Asm( "cli r0;" : : :"R0" );
-	Asm( "sti %0;" : :"d"(0xC01F) );
+    Asm( "sti %0;" : :"d"(0xC01F) );
 #endif
 }
 
@@ -266,16 +256,16 @@ Inline void
 i_unlock_cpu()
 {
 #ifdef UNMANAGED_INT
-	unsigned int imask;
-	Asm( "cli %0;" :"=d"(imask) );
-	Asm( "sti %0;" : :"d"( (0xffff & ~UNMANAGED_INT) | (imask & UNMANAGED_INT) ) );
+    unsigned int imask;
+    Asm( "cli %0;" :"=d"(imask) );
+    Asm( "sti %0;" : :"d"( (0xffff & ~UNMANAGED_INT) | (imask & UNMANAGED_INT) ) );
 #else
-	Asm( "sti %0;" : :"d"(0xffff) );
+    Asm( "sti %0;" : :"d"(0xffff) );
 #endif
 }
 
 /*
- *  タスクディスパッチャ 
+ *  タスクディスパッチャ
  */
 
 /*
@@ -284,15 +274,20 @@ i_unlock_cpu()
  *  dispatch は，タスクコンテキストから呼び出されたサービスコール処理
  *  内で，CPUロック状態で呼び出さなければならない．
  */
-extern void	dispatch(void);
+extern void dispatch(void);
 
 /*
  *  現在のコンテキストを捨ててディスパッチ（cpu_support.S）
  *
  *  exit_and_dispatch は，CPUロック状態で呼び出さなければならない．
  */
-extern void	exit_and_dispatch(void);
+extern void exit_and_dispatch(void);
 
+
+/*
+ * ブート時にシステムリセットをするなら真。デフォルトでは偽。
+ */
+extern unsigned int enable_boot_for_gdb;
 /*
  *  割込みハンドラ／CPU例外ハンドラの設定
  */
@@ -310,7 +305,7 @@ extern void (* exc_vector)(VP) ;
 Inline void
 define_inh(INHNO inhno, FP inthdr)
 {
-	dev_vector[inhno] = inthdr;
+    dev_vector[inhno] = inthdr;
 }
 
 /*
@@ -321,8 +316,8 @@ define_inh(INHNO inhno, FP inthdr)
 Inline void
 define_exc(EXCNO excno, FP exchdr)
 {
-//	exc_vector[excno] = exchdr;		// 例外ハンドラを配列に格納 
-	exc_vector = (void (*)(VP))exchdr;		// 例外ハンドラを格納
+//  exc_vector[excno] = exchdr;     // 例外ハンドラを配列に格納
+    exc_vector = (void (*)(VP))exchdr;      // 例外ハンドラを格納
 }
 
 /*
@@ -337,8 +332,8 @@ define_exc(EXCNO excno, FP exchdr)
  *  スパッチされない．
  */
 
-#define	INTHDR_ENTRY(inthdr)	extern void inthdr(void);	
-#define	INT_ENTRY(inthdr)	inthdr
+#define INTHDR_ENTRY(inthdr)    extern void inthdr(void);
+#define INT_ENTRY(inthdr)   inthdr
 
 /*
  *  CPU例外ハンドラの出入口処理の生成マクロ
@@ -348,8 +343,8 @@ define_exc(EXCNO excno, FP exchdr)
  *  スパッチされない．
  */
 
-#define	EXCHDR_ENTRY(exchdr)	extern void exchdr( VP );
-#define	EXC_ENTRY(exchdr)	exchdr
+#define EXCHDR_ENTRY(exchdr)    extern void exchdr( VP );
+#define EXC_ENTRY(exchdr)   exchdr
 
 /*
  *  CPU例外の発生した時のシステム状態の参照
@@ -361,7 +356,7 @@ define_exc(EXCNO excno, FP exchdr)
 Inline BOOL
 exc_sense_context(VP p_excinf)
 {
-	return( *pIPEND & 0x7FE6 );				// IVG15, GIE, EXP, EMU 以外のビットが立っていれば非タスクコンテキスト
+    return( *__pIPEND & 0x7FE6 );               // IVG15, GIE, EXP, EMU 以外のビットが立っていれば非タスクコンテキスト
 }
 
 /*
@@ -371,21 +366,21 @@ Inline BOOL
 exc_sense_lock(VP p_excinf)
 {
 #ifdef UNMANAGED_INT
-	return((*pIMASK | UNMANAGED_INT) != 0xFFFF );		// 0xFFFFならアンロック
+    return((*__pIMASK | UNMANAGED_INT) != 0xFFFF );     // 0xFFFFならアンロック
 #else
-	return(*pIMASK != 0xFFFF );				// 0xFFFFならアンロック
+    return(*__pIMASK != 0xFFFF );               // 0xFFFFならアンロック
 #endif
 }
 
 /*
  *  プロセッサ依存の初期化
  */
-extern void	cpu_initialize(void);
+extern void cpu_initialize(void);
 
 /*
  *  プロセッサ依存の終了時処理
  */
-extern void	cpu_terminate(void);
+extern void cpu_terminate(void);
 
 #endif /* _MACRO_ONLY */
 #endif /* _CPU_CONFIG_H_ */

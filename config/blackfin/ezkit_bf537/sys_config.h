@@ -54,7 +54,7 @@
 #include <chip_config.h>
 
 /*
- *	ターゲットシステム依存モジュール（EZKIT-BF537用）
+ *  ターゲットシステム依存モジュール（EZKIT-BF537用）
  *
  *  このインクルードファイルは，t_config.h のみからインクルードされる．
  *  他のファイルから直接インクルードしてはならない．
@@ -113,15 +113,15 @@
  * UNMANAGED_INTを宣言しない場合、NMIだけが管理外割込みとして扱われる。
  *
 */
-//#define UNMANAGED_INT 0x0020			// IVHWがカーネル管理外.
-//#define UNMANAGED_INT 0x0060			// IVTMRとIVHWがカーネル管理外.
-//#define UNMANAGED_INT 0x00E0			// IVG7, IVTMRとIVHWがカーネル管理外.
-//#define UNMANAGED_INT 0x01E0			// IVG8 ... IVG7, IVTMRとIVHWがカーネル管理外.
-//#define UNMANAGED_INT 0x03E0			// IVG9 ... IVG7, IVTMRとIVHWがカーネル管理外.
-//#define UNMANAGED_INT 0x07E0			// IVG10 ... IVG7, IVTMRとIVHWがカーネル管理外.
-//#define UNMANAGED_INT 0x0FE0			// IVG11 ... IVG7, IVTMRとIVHWがカーネル管理外.
-//#define UNMANAGED_INT 0x1FE0			// IVG12 ... IVG7, IVTMRとIVHWがカーネル管理外.
-//#define UNMANAGED_INT 0x3FE0			// IVG13 ... IVG7, IVTMRとIVHWがカーネル管理外.
+//#define UNMANAGED_INT 0x0020          // IVHWがカーネル管理外.
+//#define UNMANAGED_INT 0x0060          // IVTMRとIVHWがカーネル管理外.
+//#define UNMANAGED_INT 0x00E0          // IVG7, IVTMRとIVHWがカーネル管理外.
+//#define UNMANAGED_INT 0x01E0          // IVG8 ... IVG7, IVTMRとIVHWがカーネル管理外.
+//#define UNMANAGED_INT 0x03E0          // IVG9 ... IVG7, IVTMRとIVHWがカーネル管理外.
+//#define UNMANAGED_INT 0x07E0          // IVG10 ... IVG7, IVTMRとIVHWがカーネル管理外.
+//#define UNMANAGED_INT 0x0FE0          // IVG11 ... IVG7, IVTMRとIVHWがカーネル管理外.
+//#define UNMANAGED_INT 0x1FE0          // IVG12 ... IVG7, IVTMRとIVHWがカーネル管理外.
+//#define UNMANAGED_INT 0x3FE0          // IVG13 ... IVG7, IVTMRとIVHWがカーネル管理外.
 
 /*
  * C++関連資源を用意する
@@ -135,7 +135,7 @@
 /*
  *  起動メッセージのターゲットシステム名
  */
-#define	TARGET_NAME	"EZ-KIT Lite BF537"
+#define TARGET_NAME "EZ-KIT Lite BF537"
 
 
 /*
@@ -146,18 +146,18 @@
  *  TNUM_PORTは、TNUM_SIOP_XXXのうち、GDICが使用するものの総和。
  *  uart.cで使う。
  */
-#define TNUM_PORT	1		/* GDICがサポートするシリアルポートの数 */
-#define TNUM_SIOP_UART	1	/* PIDCがサポートするシリアルポートの数 */
+#define TNUM_PORT   1       /* GDICがサポートするシリアルポートの数 */
+#define TNUM_SIOP_UART  1   /* PIDCがサポートするシリアルポートの数 */
 
 /*
  *  シリアルポート番号に関する定義
  *  ログタスクがシリアルポートを使わない場合は無視していい。
  */
-#define	LOGTASK_PORTID	1	/* システムログに用いるシリアルポート番号 */
+#define LOGTASK_PORTID  1   /* システムログに用いるシリアルポート番号 */
 
 /*  UART0のボーレート． */
-#define UART0_BAUD_RATE 57600		/* 57600 bps*/
-#define UART1_BAUD_RATE 57600		/* 57600 bps*/
+#define UART0_BAUD_RATE 57600       /* 57600 bps*/
+#define UART1_BAUD_RATE 57600       /* 57600 bps*/
 
 /*
  * PLLの初期化の強制
@@ -166,7 +166,7 @@
  * ローダーなどの初期化ソフトがSDRAMを初期化したときにそれを保護するため
  * である。一方でVisualDSP++のデバッガはSDRAMを自分で初期化するため、
  * この機能とうまく折り合いがつかない場合がある。
- * 上京に関わらず常に初期化したい時には FORCE_PLL_INITIALIZE マクロを
+ * 状況に関わらず常に初期化したい時には FORCE_PLL_INITIALIZE マクロを
  * 宣言する。
  */
 // #deinfe FORCE_PLL_INITIALIZE

@@ -1,30 +1,28 @@
 #include "jsp_kernel.h"
+#include "sil.h"
 
-#ifdef __GNUC__
-#include "../cdefbf537.h"       /* gnu tool chain */
-#elif defined(__ECC__)
-#error "Don't use sys_debugboot.c for VDSP "
-#else
-#error "Compiler is not supported"
-#endif
 
 
 /*
 * gdbserverがターゲットのリセット機能を提供しないため、gdb経由でターゲット
 * にアプリッケーションをダウンロードすると正しく動作しないことがある。
 * このルーチンはターゲットを一度だけリセットする。
+*
+* なお、パラメータ debugが FALSEの場合、リセットはしない
 */
 void boot_for_gdb(void)
 {
-    if ( ! (*pSWRST & RESET_SOFTWARE ) ){   /* ソフトウェアリセットが起きていないなら以下実行　*/
-        *pSWRST = 0x07;                     /* 内蔵ペリフェラルのリセット　*/
+    // RESET_SOFTWARE       0x8000
+    if ( enable_boot_for_gdb ){
+        enable_boot_for_gdb = 0;            /* rebootは一回だけ*/
+        *__pSWRST = 0x07;                     /* 内蔵ペリフェラルのリセット　*/
         asm volatile( "ssync;" );
-        *pSWRST = 0x00;                     /* 内蔵ペリフェラルのリセット解除。 */
+        *__pSWRST = 0x00;                     /* 内蔵ペリフェラルのリセット解除。 */
         asm volatile( "ssync;" );
-        *pSYSCR |= 0x10;                    /* no boot on core reset */
+        *__pSYSCR |= 0x10;                    /* no boot on core reset */
         asm volatile( "ssync;" );
         asm volatile( "raise 1;" );         /* コアリセット */
         while( 1 )
-            ;                               /*リセットが発生するまでループ*/ 
+            ;                               /*リセットが発生するまでループ*/
     }
 }

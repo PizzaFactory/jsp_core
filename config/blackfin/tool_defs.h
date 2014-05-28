@@ -42,7 +42,7 @@
  */
 
 /*
- *	開発環境に依存する定義
+ *  開発環境に依存する定義
  *
  *  このインクルードファイルは，t_stddef.h と itron.h の先頭でインクルー
  *  ドされる．他のファイルからは直接インクルードすることはない．他のイ
@@ -58,17 +58,17 @@
 *               GNU Tool Chain
 *
 ***************************************************/
-#ifdef __GNUC__						/* GCC */
+#ifdef __GNUC__                     /* GCC */
 
 /*
  *  コンパイラ依存のデータ型の定義
  */
-#define	_int8_		char		/* 8ビットの整数型 */
-#define	_int16_		short		/* 16ビットの整数型 */
-#define	_int32_		int		/* 32ビットの整数型 */
-#define _int64_		long long	/* 64ビットの整数型 */
+#define _int8_      char        /* 8ビットの整数型 */
+#define _int16_     short       /* 16ビットの整数型 */
+#define _int32_     int     /* 32ビットの整数型 */
+#define _int64_     long long   /* 64ビットの整数型 */
 
-	// GCCを使う場合に、defbfxxx.h, cdefbf5xx.hを使えるようにするためのマクロ宣言
+    // GCCを使う場合に、defbfxxx.h, cdefbf5xx.hを使えるようにするためのマクロ宣言
 #ifndef __ADSPLPBLACKFIN__
 #define __ADSPLPBLACKFIN__
 #endif
@@ -77,40 +77,40 @@
 /*
  *  コンパイラの拡張機能のためのマクロ定義
  */
-#ifndef __cplusplus			/* C++ には inline がある */
-#if __STDC_VERSION__ < 199901L		/* C99 には inline がある */
-#define	inline		__inline__
+#ifndef __cplusplus         /* C++ には inline がある */
+#if __STDC_VERSION__ < 199901L      /* C99 には inline がある */
+#define inline      __inline__
 #endif /* __STDC_VERSION__ < 199901L */
 #endif /* __cplusplus */
 
-#define	Inline		static inline
+#define Inline      static inline
 
-#ifndef __cplusplus			/* C++ には asm がある */
-#define	asm		__asm__
+#ifndef __cplusplus         /* C++ には asm がある */
+#define asm     __asm__
 #endif /* __cplusplus */
 
-#define	Asm		__asm__ volatile
+#define Asm     __asm__ volatile
 
 /**************************************************
 *
 *               VisualDSP++ 
 *
 ***************************************************/
-#elif defined(__ECC__)				/* Visual DSP++ tool chain*/
+#elif defined(__ECC__)              /* Visual DSP++ tool chain*/
 
 /*
  *  コンパイラ依存のデータ型の定義
  */
-#define	_int8_		char		/* 8ビットの整数型 */
-#define	_int16_		short		/* 16ビットの整数型 */
-#define	_int32_		int		/* 32ビットの整数型 */
-#define _int64_		long long	/* 64ビットの整数型 */
+#define _int8_      char        /* 8ビットの整数型 */
+#define _int16_     short       /* 16ビットの整数型 */
+#define _int32_     int     /* 32ビットの整数型 */
+#define _int64_     long long   /* 64ビットの整数型 */
 
-	// ファイル内にしか適用しないインライン化
-#define	Inline inline
+    // ファイル内にしか適用しないインライン化
+#define Inline inline
 
-	// インラインアセンブラ
-#define	Asm		asm volatile
+    // インラインアセンブラ
+#define Asm     asm volatile
 
 
 /**************************************************
