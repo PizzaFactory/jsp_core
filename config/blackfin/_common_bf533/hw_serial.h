@@ -74,12 +74,12 @@ sio_opn_por(ID siopid, VP_INT exinf)
      */
     siopcb = uart_opn_por(siopid, exinf);
 
-	/*
-	* Enable Corrensponding Interrupt at IMASK
-	* Note that, this implementation has only 1 SIO in a system
-	*/
-	ena_int( INTNO_UART_TX );
-	ena_int( INTNO_UART_RX );
+    /*
+    * Enable Corrensponding Interrupt at IMASK
+    * Note that, this implementation has only 1 SIO in a system
+    */
+    ena_int( INTNO_UART_TX );
+    ena_int( INTNO_UART_RX );
 
     return(siopcb);
 }
@@ -91,11 +91,11 @@ Inline void
 sio_cls_por(SIOPCB *siopcb)
 {
 
-	/*
-	 * ここではSIC_IMASKの対応ビットをクリアしない。SIC_IMASKのクリアは
-	 * 危険である。UARTからの割り込みは uart_cls_por内部で禁止するので
-	 * 充分である。
-	 */
+    /*
+     * ここではSIC_IMASKの対応ビットをクリアしない。SIC_IMASKのクリアは
+     * 危険である。UARTからの割り込みは uart_cls_por内部で禁止するので
+     * 充分である。
+     */
 
     /*
      *  デバイス依存のクローズ処理．

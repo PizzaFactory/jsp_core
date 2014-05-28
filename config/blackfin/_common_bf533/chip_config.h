@@ -47,7 +47,7 @@
 
 
 /*
- *	ターゲットシステム依存モジュール（ADSP-BF531/2/3共用）
+ *  ターゲットシステム依存モジュール（ADSP-BF531/2/3共用）
  *
  *  このインクルードファイルは，t_config.h のみからインクルードされる．
  *  他のファイルから直接インクルードしてはならない．
@@ -78,9 +78,9 @@
  *  TICの割込みハンドラのベクタ番号
  */
 #ifdef USE_TIC_CORE
-#define INHNO_TIMER	INHNO_CORE_TIMER
+#define INHNO_TIMER INHNO_CORE_TIMER
 #else
-#define INHNO_TIMER	INHNO_GP_TIMER2
+#define INHNO_TIMER INHNO_GP_TIMER2
 #endif
 
 
@@ -93,8 +93,8 @@
  */
 
 
-#define	SIL_DLY_TIM1	(24*1000000000/CORECLOCK)
-#define	SIL_DLY_TIM2	(12*1000000000/CORECLOCK)
+#define SIL_DLY_TIM1    (24*1000000000/CORECLOCK)
+#define SIL_DLY_TIM2    (12*1000000000/CORECLOCK)
 
 /*************************************************************************
  * uart.c用構成マクロ
@@ -114,10 +114,10 @@
 #define UART_IOP_ACCESS
 
 /*  シリアルポートのアドレス。 */
-#define UART0_ADDRESS 0xFFC00400	// 内蔵UART THRのアドレス。
+#define UART0_ADDRESS 0xFFC00400    // 内蔵UART THRのアドレス。
 
 /*  UARTのボーレートジェネレータに設定すべき値． */
-#define UART0_DIVISOR	SYSCLOCK/16/UART0_BAUD_RATE
+#define UART0_DIVISOR   SYSCLOCK/16/UART0_BAUD_RATE
 
 /*  内蔵UARTを使う場合は、UARTx_BLACKFIN_UCENを宣言してUCENを初期化しなければならない。*/
 #define UART0_BLACKFIN_UCEN
@@ -136,35 +136,35 @@
  *  SIC_ISRにおけるビット番号である。
  *
  */
-#define INHNO_PLL			0
-#define INHNO_DMA_ERROR		1
-#define INHNO_PPI_ERROR		2
-#define INHNO_SPORT0_ERROR	3
-#define INHNO_SPORT2_ERROR	4
-#define INHNO_SPI_ERROR		5
-#define INHNO_UART_ERROR	6
-#define INHNO_RTC			7
-#define INHNO_PPI			8
-#define INHNO_SPORT0_RX		9
-#define INHNO_SPORT0_TX		10
-#define INHNO_SPORT1_RX		11
-#define INHNO_SPORT1_TX		12
-#define INHNO_SPI			13
-#define INHNO_UART_RX		14
-#define INHNO_UART_TX		15
-#define INHNO_GP_TIMER0		16
-#define INHNO_GP_TIMER1		17
-#define INHNO_GP_TIMER2		18
-#define INHNO_PFA			19
-#define INHNO_PFB			20
-#define INHNO_MEMORY_DMA0	21
-#define INHNO_MEMORY_DMA1	22
-#define INHNO_WDG			23
+#define INHNO_PLL           0
+#define INHNO_DMA_ERROR     1
+#define INHNO_PPI_ERROR     2
+#define INHNO_SPORT0_ERROR  3
+#define INHNO_SPORT2_ERROR  4
+#define INHNO_SPI_ERROR     5
+#define INHNO_UART_ERROR    6
+#define INHNO_RTC           7
+#define INHNO_PPI           8
+#define INHNO_SPORT0_RX     9
+#define INHNO_SPORT0_TX     10
+#define INHNO_SPORT1_RX     11
+#define INHNO_SPORT1_TX     12
+#define INHNO_SPI           13
+#define INHNO_UART_RX       14
+#define INHNO_UART_TX       15
+#define INHNO_GP_TIMER0     16
+#define INHNO_GP_TIMER1     17
+#define INHNO_GP_TIMER2     18
+#define INHNO_PFA           19
+#define INHNO_PFB           20
+#define INHNO_MEMORY_DMA0   21
+#define INHNO_MEMORY_DMA1   22
+#define INHNO_WDG           23
 
 // SIC_ISRにない特殊な割り込み
-#define INHNO_HW_ERROR 		24
-#define INHNO_CORE_TIMER 		25
-#define INHNO_RAISE 		26
+#define INHNO_HW_ERROR      24
+#define INHNO_CORE_TIMER        25
+#define INHNO_RAISE         26
 
 
 /*
@@ -173,30 +173,30 @@
  *  この定義はena_int, dis_intの引数として使う。
  */
 
-#define INTNO_PLL			0
-#define INTNO_DMA_ERROR		1
-#define INTNO_PPI_ERROR		2
-#define INTNO_SPORT0_ERROR	3
-#define INTNO_SPORT2_ERROR	4
-#define INTNO_SPI_ERROR		5
-#define INTNO_UART_ERROR	6
-#define INTNO_RTC			7
-#define INTNO_PPI			8
-#define INTNO_SPORT0_RX		9
-#define INTNO_SPORT0_TX		10
-#define INTNO_SPORT1_RX		11
-#define INTNO_SPORT1_TX		12
-#define INTNO_SPI			13
-#define INTNO_UART_RX		14
-#define INTNO_UART_TX		15
-#define INTNO_GP_TIMER0		16
-#define INTNO_GP_TIMER1		17
-#define INTNO_GP_TIMER2		18
-#define INTNO_PFA			19
-#define INTNO_PFB			20
-#define INTNO_MEMORY_DMA0	21
-#define INTNO_MEMORY_DMA1	22
-#define INTNO_WDG			23
+#define INTNO_PLL           0
+#define INTNO_DMA_ERROR     1
+#define INTNO_PPI_ERROR     2
+#define INTNO_SPORT0_ERROR  3
+#define INTNO_SPORT2_ERROR  4
+#define INTNO_SPI_ERROR     5
+#define INTNO_UART_ERROR    6
+#define INTNO_RTC           7
+#define INTNO_PPI           8
+#define INTNO_SPORT0_RX     9
+#define INTNO_SPORT0_TX     10
+#define INTNO_SPORT1_RX     11
+#define INTNO_SPORT1_TX     12
+#define INTNO_SPI           13
+#define INTNO_UART_RX       14
+#define INTNO_UART_TX       15
+#define INTNO_GP_TIMER0     16
+#define INTNO_GP_TIMER1     17
+#define INTNO_GP_TIMER2     18
+#define INTNO_PFA           19
+#define INTNO_PFB           20
+#define INTNO_MEMORY_DMA0   21
+#define INTNO_MEMORY_DMA1   22
+#define INTNO_WDG           23
 
 
 
@@ -212,14 +212,14 @@ void make_priority_mask( void );
 /*
  *  ターゲットシステム依存の初期化
  */
-extern void	sys_initialize(void);
+extern void sys_initialize(void);
 
 /*
  *  ターゲットシステムの終了
  *
  *  システムを終了する時に使う．ROMモニタ／GDB STUB呼出しで実現する．
  */
-extern void	sys_exit(void);
+extern void sys_exit(void);
 
 /*
  *  ターゲットシステムの文字出力
@@ -227,7 +227,7 @@ extern void	sys_exit(void);
  *  システムの低レベルの文字出力ルーチン．ROMモニタ／GDB STUB呼出しで実
  *  現する．
  */
-extern void	sys_putc(char c);
+extern void sys_putc(char c);
 
 /*
 * SIC_IARxを解析して、イベント順位ごとに割り当てられている割り込み
@@ -252,6 +252,12 @@ extern ER dis_int( INTNO intno );
 typedef unsigned int IMS;
 extern ER chg_ims( IMS ims );
 extern ER get_ims( IMS * p_ims );
+
+/**
+ * スプリアス・イベント・ハンドラ
+ */
+void spurious_exc_handler(VP p_excinf);
+void spurious_int_handler();
 
 /*
  * 割り込みを起こしたデバイスを調べる

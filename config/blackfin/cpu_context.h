@@ -39,7 +39,7 @@
  */
 
 /*
- *	タスクコンテキスト操作ルーチン（BLACKfin用）
+ *  タスクコンテキスト操作ルーチン（BLACKfin用）
  *
  *  このファイルを cpu_config.h と分離しているのは，このファイルは TCB
  *  が定義された後に読む必要があるのに対して，cpu_config.h には TCB を
@@ -68,25 +68,25 @@ create_context(TCB *tcb)
  *
  *  タスクが休止状態から実行できる状態に移行する時に呼ばれる．
  */
-extern void	activate_r(void);
+extern void activate_r(void);
 
 Inline void
 activate_context(TCB *tcb)
 {
-	VW	*sp;
+    VW  *sp;
 
-	sp = (VW *)((SIZE)(tcb->tinib->stk) + tcb->tinib->stksz);
-	*--sp = (VW)(tcb->tinib->exinf);	// ext_infをプッシュ
-	*--sp = (VW) ext_tsk;				// ext_tsk()のアドレスをプッシュ
-	*--sp = (VW)(tcb->tinib->task);		// タスクのアドレスをプッシュ
-	tcb->tskctxb.sp = sp;
-	tcb->tskctxb.pc = activate_r;
+    sp = (VW *)((SIZE)(tcb->tinib->stk) + tcb->tinib->stksz);
+    *--sp = (VW)(tcb->tinib->exinf);    // ext_infをプッシュ
+    *--sp = (VW) ext_tsk;               // ext_tsk()のアドレスをプッシュ
+    *--sp = (VW)(tcb->tinib->task);     // タスクのアドレスをプッシュ
+    tcb->tskctxb.sp = sp;
+    tcb->tskctxb.pc = activate_r;
 }
 
 /*
  *  ext_tsk がスタック上に確保するダミー領域のサイズ
  */
-#define	ACTIVATED_STACK_SIZE	(sizeof(VW) * 3)
+#define ACTIVATED_STACK_SIZE    (sizeof(VW) * 3)
 
 /*
  *  calltex は使用しない

@@ -11,7 +11,7 @@
  *  Copyright (C) 2004,2006,2006 by Takemasa Nakamura
  *  Copyright (C) 2004 by Ujinosuke
  *
- *  上記著作権者は，以下の (1)〜(4) の条件か，Free Software Foundation
+ *  上記著作権者は，以下の (1)縲��(4) の条件か，Free Software Foundation
  *  によって公表されている GNU General Public License の Version 2 に記
  *  述されている条件を満たす場合に限り，本ソフトウェア（本ソフトウェア
  *  を改変したものを含む．以下同じ）を使用・複製・改変・再配布（以下，
@@ -42,7 +42,7 @@
  */
 
 /*
- *	タイマドライバ（ADSP-BF537用）
+ *  タイマドライバ（ADSP-BF537用）
  *
  */
 
@@ -50,17 +50,11 @@
 #define _HW_TIMER_H_
 
 #include <s_services.h>
-
+#include "sil.h"
 
 #ifndef _MACRO_ONLY
 
-#ifdef __GNUC__			// gcc
-#include "../cdefbf537.h"
-#elif defined(__ECC__)	// visualdsp
-#include <cdefbf53x.h>
-#else
-#error "Compiler is not supported"
-#endif
+
 
 //#include <ccblkfn.h>
 
@@ -76,26 +70,46 @@
 Inline void
 hw_timer_initialize()
 {
-#ifndef USE_TIC_CORE
-	UW	reg;
-#endif
-
 #ifdef USE_TIC_CORE
-	// Core timer
-	*pTCNTL = TMPWR;					// power up timer;
-	*pTPERIOD = CORECLOCK/1000;			// CORE CLOCK is defined in sys_config.h
-	*pTCNTL = TMPWR | TMREN | TAUTORLD;
+    // Core timer
+    // TCNTL bit assignement
+    // TMPWR                  0x00000001
+    // TMREN                  0x00000002
+    // TAUTORLD               0x00000004
+    // TINT                   0x00000008
+    *__pTCNTL = 0x00000001;                 // TMPWR : power up timer;
+    *__pTPERIOD = CORECLOCK/1000;           // CORE CLOCK is defined in sys_config.h
+    *__pTCNTL = 0x00000007;                 // TMPWR | TMREN | TAUTORLD;
 #else
-	// GPT7(General-purpose timer7)
-
-	*pTIMER7_CONFIG = PERIOD_CNT | OUT_DIS |IRQ_ENA | PWM_OUT;	// PWM_OUT, Output Pad disable
-	*pTIMER7_PERIOD = SYSCLOCK/1000;	// SYS CLOCK is defined in sys_config.h
-	*pTIMER7_WIDTH = 1;					// 0 < width < period
-	*pTIMER_ENABLE = TIMEN7;			// timer7 start
-	ena_int( INHNO_TIMER );				// enable Timer Interrupt
+    // GPT7(General-purpose timer7)
+        // PWM_OUT          0x0001
+        // WDTH_CAP         0x0002
+        // EXT_CLK          0x0003
+        // PULSE_HI         0x0004
+        // PERIOD_CNT       0x0008
+        // IRQ_ENA          0x0010
+        // TIN_SEL          0x0020
+        // OUT_DIS          0x0040
+        // CLK_SEL          0x0080
+        // TOGGLE_HI        0x0100
+        // EMU_RUN          0x0200
+        // ERR_TYP          0xC000
+    *__pTIMER7_CONFIG = 0x0059;// PERIOD_CNT | OUT_DIS |IRQ_ENA | PWM_OUT;  // PWM_OUT, Output Pad disable
+    *__pTIMER7_PERIOD = SYSCLOCK/1000;  // SYS CLOCK is defined in sys_config.h
+    *__pTIMER7_WIDTH = 1;                   // 0 < width < period
+        // TIMEN0           0x0001
+        // TIMEN1           0x0002
+        // TIMEN2           0x0004
+        // TIMEN3           0x0008
+        // TIMEN4           0x0010
+        // TIMEN5           0x0020
+        // TIMEN6           0x0040
+        // TIMEN7           0x0080
+    *__pTIMER_ENABLE =  0x0080; //TIMEN7;           // timer7 start
+    ena_int( INHNO_TIMER );             // enable Timer Interrupt
 
 #endif
-	asm("ssync;");
+    asm("ssync;");
 
 }
 
@@ -106,13 +120,20 @@ Inline void
 hw_timer_int_clear()
 {
 #ifdef USE_TIC_CORE
-	// Core timer
-	*pTCNTL = TMPWR | TMREN | TAUTORLD | TINT;
+    // Core timer
+    // TCNTL bit assignement
+    // TMPWR                  0x00000001
+    // TMREN                  0x00000002
+    // TAUTORLD               0x00000004
+    // TINT                   0x00000008
+    /* TINTはW1Cではないので、TINTのTINTビットは0を書き込む */
+    *__pTCNTL = 0x00000007; // TMPWR | TMREN | TAUTORLD;
 #else
-	// GPT7(General-purpose timer7)
-	*pTIMER_STATUS = TIMIL7;
+    // GPT7(General-purpose timer7)
+        // TIMIL7           0x00080000
+    *__pTIMER_STATUS =  0x00080000; // TIMIL7;
 #endif
-	asm("ssync;");
+    asm("ssync;");
 }
 
 /**************************************************************
@@ -123,18 +144,24 @@ hw_timer_int_clear()
 Inline void
 hw_timer_terminate()
 {
-	/*
-	 *  タイマの動作を停止する．
-	 */
+    /*
+     *  タイマの動作を停止する．
+     */
 #ifdef USE_TIC_CORE
-	// Core timer
-	*pTCNTL = TMPWR | TAUTORLD | TINT;		// 停止
-	*pTCNTL = 0;							// パワーダウンモード
+    // Core timer
+    // TCNTL bit assignement
+    // TMPWR                  0x00000001
+    // TMREN                  0x00000002
+    // TAUTORLD               0x00000004
+    // TINT                   0x00000008
+    *__pTCNTL = 0x00000005; //TMPWR | TAUTORLD | TINT;      // 停止
+    *__pTCNTL = 0;                          // パワーダウンモード
 #else
-	// GPT2(General-purpose timer7)
-	*pTIMER_DISABLE = TIMEN7;			// timer7 disable
+    // GPT2(General-purpose timer7)
+        // TIMDIS7          0x0080
+    *__pTIMER_DISABLE = 0x0080; // TIMDIS7;         // timer7 disable
 #endif
-	asm("ssync;");
+    asm("ssync;");
 }
 
 

@@ -42,23 +42,12 @@
  */
 
 /*
- *	ターゲットシステム依存モジュール（ADSP-BF531/2/3用）
+ *  ターゲットシステム依存モジュール（ADSP-BF531/2/3用）
  */
 
 #include "jsp_kernel.h"
 #include <sil.h>
-
-#ifdef __GNUC__
-#include "../cdefbf532.h"		/* gnu tool chain */
-#elif defined(__ECC__)
-#include <cdefbf53x.h>				/* VisualDSP++ */
-#include <sys/exception.h>
-#include <ccblkfn.h>
-#include <sysreg.h>
-#else
-#error "Compiler is not supported"
-#endif
-
+#include <cdefBF533.h>
 
 
 #define SYSCFG_VALUE 0x36
@@ -69,43 +58,85 @@
 void
 sys_initialize()
 {
-	// BF531/2/3のアノーマリー対策 rev 0.1, 0.2用
-	Asm( "SYSCFG=%0;"  : :"d"(SYSCFG_VALUE) ) ;
+    // BF531/2/3のアノーマリー対策 rev 0.1, 0.2用
+    Asm( "SYSCFG=%0;"  : :"d"(SYSCFG_VALUE) ) ;
 
-	/*
-	 *  PLLの設定
-	 *
-	 */
-	/*
-	 *  27MHz*22倍=594MHzに設定する(600MHz)
-	 *  27MHz*28倍=756MHzに設定する(750MHz)
-	 *  CSEL = 1; SSEL = 5 (600MHz)
-	 *  CSEL = 1; SSEL = 6 (750MHz)
-	 */
+    /*
+     * スプリアス割り込みハンドラの設定
+     *
+     * cpu_initialize()が行うダミーの割り込みハンドラの設定を上書きする。
+     * アプリケーションが割り込みハンドラを設定すると、以下の設定も上書き
+     * される。
+     */
+    int i;
+
+    for ( i=0; i<DEVICE_INTERRUPT_COUNT+3; i++ )
+        dev_vector[i] = &spurious_int_handler;
+
+    exc_vector = &spurious_exc_handler;
+
+    /*
+     *  PLLの設定
+     *
+     */
+    /*
+     *  27MHz*22倍=594MHzに設定する(600MHz)
+     *  27MHz*28倍=756MHzに設定する(750MHz)
+     *  CSEL = 1; SSEL = 5 (600MHz)
+     *  CSEL = 1; SSEL = 6 (750MHz)
+     */
 #ifndef FORCE_PLL_INITIALIZE
-	 	// PLLが初期値のままであり、かつ、SDRAMが利用中でなければPLLを初期化する
-	 if ( ( *pPLL_CTL == 0x1400 ) && ( !(*pEBIU_SDBCTL & EBE ) ) )
+        // PLLが初期値のままであり、かつ、SDRAMが利用中でなければPLLを初期化する
+    // EBE  0x00000001
+     if ( ( *__pPLL_CTL == 0x1400 ) && ( !(*__pEBIU_SDBCTL & 0x00000001 /* EBE */ ) ) )
 #endif
-	 {
+     {
 
-		*pSIC_IWR = IWR_ENABLE(0);				// PLLのみIWRを許す
+        *__pSIC_IWR = 1<<0;             // PLLのみIWRを許す
+    // CCLK_DIV1            0x0000
+    // CCLK_DIV2            0x0010
+    // CCLK_DIV4            0x0020
+    // CCLK_DIV8            0x0030
 #if CSELVAL == 1
-		*pPLL_DIV = CCLK_DIV1 | SCLK_DIV(SSELVAL);
+        *__pPLL_DIV = 0x0000 | (SSELVAL);   // CCLK_DIV1
 #elif CSELVAL == 2
-		*pPLL_DIV = CCLK_DIV2 | SCLK_DIV(SSELVAL);
+        *__pPLL_DIV = 0x0010 | (SSELVAL);   // CCLK_DIV2
 #elif CSELVAL == 4
-		*pPLL_DIV = CCLK_DIV4 | SCLK_DIV(SSELVAL);
+        *__pPLL_DIV = 0x0020 | (SSELVAL);   // CCLK_DIV4
 #elif CSELVAL == 8
-		*pPLL_DIV = CCLK_DIV8 | SCLK_DIV(SSELVAL);
+        *__pPLL_DIV = 0x0030 | (SSELVAL);   // CCLK_DIV8
 #else
 #error Wrong CSELVAL. Must be one of 1,2,4,8.
 #endif
 
-		*pPLL_CTL = MSELVAL << 9;
+        *__pPLL_CTL = MSELVAL << 9;
 
-		asm("cli r0; csync; idle; sti r0;": : :"R0");
-		*pSIC_IWR = IWR_ENABLE_ALL;
-	}
+        asm("cli r0; csync; idle; sti r0;": : :"R0");
+        *__pSIC_IWR = 0xFFFFFFFF;   // IWR_ENABLE_ALL;
+    }
+
+        /*
+         *  UART分周比の設定
+         *
+         *  Logtaskが動作する前にsys_putc()を使うための設定を行う
+         */
+#define DLAB 0x80
+
+            /* Blackfin 固有の設定。UARTイネーブル */
+        *pUART_GCTL = 1;
+
+            /* クロックの設定 */
+        *pUART_LCR |= DLAB;
+        *pUART_DLL = UART0_DIVISOR & 0xFF ;
+        *pUART_DLH = UART0_DIVISOR >> 8;
+        *pUART_LCR &= ~DLAB;
+
+            /* モード設定, パリティ無し 8bit data, 1 stop bit */
+        *pUART_LCR = 0x03;
+
+            /* 割込み禁止 */
+        *pUART_IER = 0;
+
 
 }
 
@@ -145,26 +176,26 @@ unsigned int priority_mask[16]={
 
 void make_priority_mask( void )
 {
-	unsigned int i, priority, device, iar;
+    unsigned int i, priority, device, iar;
 
 
-	/*
+    /*
  *  割り込み順位ごとのISRビットマップの作成
  *  SIC_IARxの設定はこの部分より前に済ませること
  */
 
- 	for ( i=0; i<16; i++ ){
- 		priority_mask[i] = 0;
- 	}
+    for ( i=0; i<16; i++ ){
+        priority_mask[i] = 0;
+    }
 
-	device = 1;
-	iar = *pSIC_IAR0;
+    device = 1;
+    iar = *__pSIC_IAR0;
     INSTALL_PRIORITY
 
-	iar = *pSIC_IAR1;
+    iar = *__pSIC_IAR1;
     INSTALL_PRIORITY
 
-	iar = *pSIC_IAR2;
+    iar = *__pSIC_IAR2;
     INSTALL_PRIORITY
 
 }
@@ -176,20 +207,20 @@ void make_priority_mask( void )
  */
 ER ena_int( INTNO intno )
 {
-	unsigned int mask;
+    unsigned int mask;
 
-	if ( intno >= DEVICE_INTERRUPT_COUNT )
-		return ( E_PAR );
-	else {
-		SIL_PRE_LOC;
+    if ( intno >= DEVICE_INTERRUPT_COUNT )
+        return ( E_PAR );
+    else {
+        SIL_PRE_LOC;
 
-		mask = 1 << intno;
-		SIL_LOC_INT();			// 管理外割り込みまで禁止する
-		*pSIC_IMASK |= mask;
-		asm volatile( "ssync;" );
-		SIL_UNL_INT();			// 割り込み再許可
-		return (0);
-	}
+        mask = 1 << intno;
+        SIL_LOC_INT();          // 管理外割り込みまで禁止する
+        *__pSIC_IMASK |= mask;
+        asm volatile( "ssync;" );
+        SIL_UNL_INT();          // 割り込み再許可
+        return (0);
+    }
 }
 /*
  * dis_int()は、この実装ではSIC_IMASKの指定ビットをクリアする。
@@ -200,16 +231,16 @@ ER ena_int( INTNO intno )
  *
 ER dis_int( INTNO intno )
 {
-	unsigned int mask;
+    unsigned int mask;
 
-	if ( intno >= DEVICE_INTERRUPT_COUNT )
-		return ( E_PAR );
-	else {
-		mask = 1 << intno;
-		mask = ~mask;
-		*pSIC_IMASK &= mask;
-		return (0);
-	}
+    if ( intno >= DEVICE_INTERRUPT_COUNT )
+        return ( E_PAR );
+    else {
+        mask = 1 << intno;
+        mask = ~mask;
+        *__pSIC_IMASK &= mask;
+        return (0);
+    }
 }
 */
 
@@ -222,16 +253,16 @@ ER dis_int( INTNO intno )
  *
 ER chg_ims( IMS ims )
 {
-	*pSIC_IMASK = ims;
-	return( 0 );
+    *__pSIC_IMASK = ims;
+    return( 0 );
 }
 */
 
 
 extern ER get_ims( IMS * p_ims )
 {
-	*p_ims = *pSIC_IMASK;
-	return( 0 );;
+    *p_ims = *__pSIC_IMASK;
+    return( 0 );;
 }
 
 
@@ -240,40 +271,40 @@ extern ER get_ims( IMS * p_ims )
  */
 void device_dispatcher(  unsigned int priority, unsigned int imask )
 {
-	unsigned int candidates, device;
+    unsigned int candidates, device;
 
-	candidates = priority_mask[priority] & *pSIC_ISR & *pSIC_IMASK;	// 現在のプライオリティに相当する割込み源を特定する
+    candidates = priority_mask[priority] & *__pSIC_ISR & *__pSIC_IMASK; // 現在のプライオリティに相当する割込み源を特定する
 
-	asm volatile("sti %0;": : "d"(imask) );
+    asm volatile("sti %0;": : "d"(imask) );
 
-	if ( ! candidates ) // 割り込み源が特定できないなら、コア由来である
-	{
-		if ( priority == ik_hardware_err)
-			dev_vector[INHNO_HW_ERROR]();
-		else
-			if ( priority == ik_timer)
-			dev_vector[INHNO_TIMER]();
-		else
-			dev_vector[INHNO_RAISE]();		//　ソフトウェア割り込み
+    if ( ! candidates ) // 割り込み源が特定できないなら、コア由来である
+    {
+        if ( priority == ik_hardware_err)
+            dev_vector[INHNO_HW_ERROR]();
+        else
+            if ( priority == ik_timer)
+            dev_vector[INHNO_TIMER]();
+        else
+            dev_vector[INHNO_RAISE]();      //　ソフトウェア割り込み
 
-	}
-	else
-	{
-		if ( candidates & 0x80000000 )
-			device = 31;
-		else
-		{
+    }
+    else
+    {
+        if ( candidates & 0x80000000 )
+            device = 31;
+        else
+        {
 #ifdef __GNUC__
-	asm ( "r1.L = signbits %1; %0 = r1.L(z);":"=d"(device) :"d"(candidates): "R1"  );
+    asm ( "r1.L = signbits %1; %0 = r1.L(z);":"=d"(device) :"d"(candidates): "R1"  );
 #elif defined(__ECC__)
-	asm( "%0 = signbits %1;" : "=l"( device ) : "d"( candidates ) );
+    asm( "%0 = signbits %1;" : "=l"( device ) : "d"( candidates ) );
 #else
 #error "Compiler is not supported"
 #endif
-			device = 30 - device;		// bit mask is converted to bit number
-		}
-		dev_vector[device]();
-	}
+            device = 30 - device;       // bit mask is converted to bit number
+        }
+        dev_vector[device]();
+    }
 }
 
 
@@ -284,8 +315,8 @@ void device_dispatcher(  unsigned int priority, unsigned int imask )
 void
 sys_exit()
 {
-	while(1)
-		;
+    while(1)
+        ;
 }
 /*
  *  ターゲットシステムの文字出力
@@ -293,6 +324,13 @@ sys_exit()
 void
 sys_putc(char c)
 {
+    if ( c== 0x0A )         /* もし LF ならば */
+        sys_putc( 0x0D );   /* CRを一文字送信 */
+
+    while( !( *pUART_LSR & (1<<5)) )
+        ;       /* UART0 LSRのTHREが1になるまで待つ。1ならば送信レジスタ空き。*/
+
+    *pUART_THR = c; /* 一文字送信 */
 }
 
 

@@ -2,7 +2,7 @@
  *  TOPPERS/JSP Kernel
  *      Toyohashi Open Platform for Embedded Real-Time Systems/
  *      Just Standard Profile Kernel
- * 
+ *
  *  Copyright (C) 2000-2003 by Embedded and Real-Time Systems Laboratory
  *                              Toyohashi Univ. of Technology, JAPAN
  *
@@ -11,7 +11,7 @@
  *  Copyright (C) 2004,2006,2006 by Takemasa Nakamura
  *  Copyright (C) 2004 by Ujinosuke
  *
- *  上記著作権者は，以下の (1)〜(4) の条件か，Free Software Foundation 
+ *  上記著作権者は，以下の (1)〜(4) の条件か，Free Software Foundation
  *  によって公表されている GNU General Public License の Version 2 に記
  *  述されている条件を満たす場合に限り，本ソフトウェア（本ソフトウェア
  *  を改変したものを含む．以下同じ）を使用・複製・改変・再配布（以下，
@@ -32,30 +32,32 @@
  *        報告すること．
  *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
  *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
- * 
+ *
  *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
  *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，その適用可能性も
  *  含めて，いかなる保証も行わない．また，本ソフトウェアの利用により直
  *  接的または間接的に生じたいかなる損害に関しても，その責任を負わない．
- * 
- *  
+ *
+ *
  */
 
 
 #define _MACRO_ONLY
 
 /*
- *	カーネル用のスタートアップモジュール（BLACKfin用）
+ *  カーネル用のスタートアップモジュール（BLACKfin用）
  */
- 
+
 #include "jsp_kernel.h"
- 
 
 
-			// 割込み、例外からの戻りをリクエストする例外引数
+
+            // 割込み、例外からの戻りをリクエストする例外引数
 #define RETURNREQ 0xf
+            // コアタイマーレジスタのアドレス
+#define TCNTL 0xFFE03000
 
-			// 32bit レジスタに即値をロードするマクロ
+            // 32bit レジスタに即値をロードするマクロ
 #ifdef __GNUC__
 #define LOADLABEL( reg, value32 ) reg##.h = value32; reg##.l = value32;
 #define LOADVALUE( reg, value32 ) reg##.h = ( value32 >> 16 ) &0xFFFF; reg##.l = value32 & 0xFFFF;
@@ -67,21 +69,15 @@
 #endif
 
 
-#ifdef __GNUC__
-#include "cdef_LPBlackfin.h"		/* gnu tool chain */
-#elif defined(__ECC__)
-#include <cdef_lpblackfin.h>	/* VisualDSP++ */
-#else
-#error "Compiler is not supported"
-#endif
-
 #include "saverestore.h"
 
 
+
 #ifdef __GNUC__
-.section .init;
+.section .start, "ax";
 .extern _boot_for_gdb;
 .extern __bss_start, __bss_end;
+.extern __init;
 #elif defined(__ECC__)
 .section program;
 #else
@@ -111,13 +107,13 @@
 #endif
 
 start:
-	R0 = 0;
-	LC0 = R0;
-	LC1 = R0;
-	L0 = R0;
-	L1 = R0;
-	L2 = R0;
-	L3 = R0;
+    R0 = 0;
+    LC0 = R0;
+    LC1 = R0;
+    L0 = R0;
+    L1 = R0;
+    L2 = R0;
+    L3 = R0;
     LOADLABEL( p0, ldf_stack_end )
     sp = p0;
 #ifdef __GNUC__                 // bss領域の初期化
@@ -127,93 +123,111 @@ start:
     p0 = r0;                // 開始アドレス
     p2 = r2;
     r0 = 0;
-    loop bssfill lc0 = p2; 
+    loop bssfill lc0 = p2;
 loop_begin bssfill
         b[p0++] = r0;
 loop_end bssfill;
-
+            // boot_for_gdb()は定義されているか。
+    LOADLABEL( p0, _boot_for_gdb )
+    cc = p0 == 0;
+    if cc jump skip_boot_for_gdb;   // 定義されていないならスキップ
     sp += -12;
-    call _boot_for_gdb;     // gdbでロードしたときにリセットを確実にするためのコード
+    call (p0);     // gdbでロードしたときにリセットを確実にするためのコード
     sp += 12;
+skip_boot_for_gdb:
 #elif defined(__ECC__)
 #else
 #error "Compiler is not supported"
 #endif
 
-#ifdef USE_RUNTIME_INIT			// board_config.h を参照
-	sp += -12;
-	call _mi_initialize;		// テーブル初期化
-	sp += 12;
-	cc = r0;					// 返り値をチェック
-invalid : 
-	if cc jump invalid; 		// 非0ならエラー
+            // コアタイマーをディセーブルする
+    LOADVALUE( p0, TCNTL )
+    r0 = 0;
+    [p0] = r0;
+
+
+#ifdef USE_RUNTIME_INIT         // board_config.h を参照
+    sp += -12;
+    call _mi_initialize;        // テーブル初期化
+    sp += 12;
+    cc = r0;                    // 返り値をチェック
+invalid :
+    if cc jump invalid;         // 非0ならエラー
 #endif
-					// TOPPERS/JSP for BLACKfinは emu,rst,nmiを管理しない
-	LOADVALUE( p0,EVT0+2*4)	// NMIベクトル
-	p1 = 4;
+                    // TOPPERS/JSP for BLACKfinは emu,rst,nmiを管理しない
+    LOADVALUE( p0,__EVT0+2*4)   // NMIベクトル
+    p1 = 4;
 
 
-	LOADLABEL( r0, nmiEntry )		// NMI
-	[p0++p1] = r0;
+    LOADLABEL( r0, nmiEntry )       // NMI
+    [p0++p1] = r0;
 
-	LOADLABEL( r0, expEntry)		// EXP
-	[p0++p1] = r0;
+    LOADLABEL( r0, expEntry)        // EXP
+    [p0++p1] = r0;
 
-	p0 = p0+p1;					// 予約領域をスキップ
+    p0 = p0+p1;                 // 予約領域をスキップ
 
-	LOADLABEL( r0, ivHWEntry)		// ハードウェアエラー
-	[p0++p1] = r0;
+    LOADLABEL( r0, ivHWEntry)       // ハードウェアエラー
+    [p0++p1] = r0;
 
-	LOADLABEL( r0, ivTMREntry)		// タイマー
-	[p0++p1] = r0;
+    LOADLABEL( r0, ivTMREntry)      // タイマー
+    [p0++p1] = r0;
 
-	LOADLABEL( r0, ivg7Entry)		// IVG7
-	[p0++p1] = r0;
+    LOADLABEL( r0, ivg7Entry)       // IVG7
+    [p0++p1] = r0;
 
-	LOADLABEL( r0, ivg8Entry)		// IVG8
-	r0.H = ivg8Entry;
-	[p0++p1] = r0;
+    LOADLABEL( r0, ivg8Entry)       // IVG8
+    r0.H = ivg8Entry;
+    [p0++p1] = r0;
 
-	LOADLABEL( r0, ivg9Entry)		// IVG9
-	[p0++p1] = r0;
+    LOADLABEL( r0, ivg9Entry)       // IVG9
+    [p0++p1] = r0;
 
-	LOADLABEL( r0, ivg10Entry)		// IVG10
-	[p0++p1] = r0;
+    LOADLABEL( r0, ivg10Entry)      // IVG10
+    [p0++p1] = r0;
 
-	LOADLABEL( r0, ivg11Entry)		// IVG11
-	[p0++p1] = r0;
+    LOADLABEL( r0, ivg11Entry)      // IVG11
+    [p0++p1] = r0;
 
-	LOADLABEL( r0, ivg12Entry)		// IVG12
-	[p0++p1] = r0;
+    LOADLABEL( r0, ivg12Entry)      // IVG12
+    [p0++p1] = r0;
 
-	LOADLABEL( r0, ivg13Entry)		// IVG13
-	[p0++p1] = r0;
+    LOADLABEL( r0, ivg13Entry)      // IVG13
+    [p0++p1] = r0;
 
-	LOADLABEL( r0, ivg14Entry)		// IVG14
-	[p0++p1] = r0;
+    LOADLABEL( r0, ivg14Entry)      // IVG14
+    [p0++p1] = r0;
 
-	LOADLABEL( r0, task_level)		// IVG15はタスクに遷移するためのエントリー
-	[p0++p1] = r0;
-	
-	LOADLABEL( p2, user)				// ダミーの戻り番地を設定
-	reti = p2;
-	csync;
-	raise	15;					// IVG15を生起する。割り込みは遅延発生する。
-	
-	r0 = 0xC01F(z);				// IVG15を受付可能に(CPUロック状態)
-	sti r0;
-	csync;
-	rti;						// ユーザーモードへ遷移する
-	
+    LOADLABEL( r0, task_level)      // IVG15はタスクに遷移するためのエントリー
+    [p0++p1] = r0;
+
+    LOADLABEL( p2, user)                // ダミーの戻り番地を設定
+    reti = p2;
+    csync;
+    raise   15;                 // IVG15を生起する。割り込みは遅延発生する。
+
+    r0 = 0xC01F(z);             // IVG15を受付可能に(CPUロック状態)
+    sti r0;
+
+            // ここからIVG15への遷移が始まる。rti命令を実行するたびに、IPENDに
+            // 基づいてイベント・レベルが落ちていくが、レベルにかかわらず戻り番地は
+            // retiレジスタの値、つまり user: である。結局、user:からrti;命令までの
+            // ループを繰り返す。最終的にユーザー・レベルに戻ると、今度はトリガーを
+            // かけていたIVG15による遅延割り込みが発生して task_level:へとジャンプする。
+user:
+    csync;
+    rti;                        // ユーザーモードへ遷移する
+
 task_level:                     // ここからタスクの実行順位
     r0 = syscfg;
-    r1 = 0x4;                   // セルフ・ネスティング割込み
+    r1 = 0x6;                   // セルフ・ネスティング割込み及びCYCLESカウンタ
     r0 = r0 | r1;
     syscfg = r0;                // セルフ・ネストを有効に
 
     sp += -12;
-#ifdef __GNUC__					/* GCC */
-#elif defined(__ECC__)			/* VisualDSP++ */
+#ifdef __GNUC__                 /* GCC */
+//    call.x  __init;             /* 大域オブジェクトを初期化 */
+#elif defined(__ECC__)          /* VisualDSP++ */
 #ifdef INIT_C_PLUS_PLUS
     r0 = 0;
     r1 = 0;
@@ -223,10 +237,9 @@ task_level:                     // ここからタスクの実行順位
 #error "Compiler is not supported"
 #endif
 
-    [--sp] = reti;				// 戻り番地を捨てて割り込み可能にする
-    jump.x _kernel_start;			// kernel_stgart()からは戻ってこない
-user:
-	jump	user;
+    [--sp] = reti;              // 戻り番地を捨てて割り込み可能にする
+    jump.x _kernel_start;           // kernel_stgart()からは戻ってこない
+    csync;
 start.end:
 
 
@@ -240,9 +253,9 @@ start.end:
 
 #ifdef INIT_C_PLUS_PLUS
 .section ctor;
-	.align 4;
+    .align 4;
 ___ctor_table:
-	.byte4=0;
+    .byte4=0;
 .global ___ctor_table;
 .type ___ctor_table,STT_OBJECT;
 .extern ___ctorloop;

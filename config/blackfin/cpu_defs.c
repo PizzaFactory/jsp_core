@@ -40,29 +40,29 @@
 #include <s_services.h>
 
 #define __SIL_LOCK_INTERRUPT( x ) \
-	if (DESTRUCTIVE_READ(iop)){\
-		SIL_PRE_LOC;\
-		SIL_LOC_INT();\
-		x;\
-		SIL_UNL_INT();\
-	}\
-	else\
-		x;
+    if (DESTRUCTIVE_READ(iop)){\
+        SIL_PRE_LOC;\
+        SIL_LOC_INT();\
+        x;\
+        SIL_UNL_INT();\
+    }\
+    else\
+        x;
 
  VB sil_reb_iop(VP iop)
 {
-	VH temp;
-//	PROLOGUE
-	
+    VH temp;
+//  PROLOGUE
+    
     __SIL_LOCK_INTERRUPT( temp = sil_reh_mem((VP)iop) );
 
-//	EPILOGUE;
+//  EPILOGUE;
     return temp;
 }
 
  VH sil_reh_iop(VP iop)
 {
-	VH temp;
+    VH temp;
 
     __SIL_LOCK_INTERRUPT( temp = sil_reh_mem((VP)iop) );
 
@@ -71,7 +71,7 @@
 
  VW sil_rew_iop(VP iop)
 {
-	VW temp;
+    VW temp;
 
     __SIL_LOCK_INTERRUPT( temp = sil_rew_mem((VP)iop) );
 
@@ -81,8 +81,8 @@
 
  VH sil_reh_lep(VP iop)
 {
-	VH temp;
-	
+    VH temp;
+    
     __SIL_LOCK_INTERRUPT( temp = sil_reh_lem((VP)iop) );
 
     return temp;
@@ -91,8 +91,8 @@
 
  VW sil_rew_lep(VP iop)
 {
-	VW temp;
-	
+    VW temp;
+    
     __SIL_LOCK_INTERRUPT( temp = sil_rew_lem((VP)iop) );
 
     return temp;
@@ -100,8 +100,8 @@
 
  VH sil_reh_bep(VP iop)
 {
-	VH temp;
-	
+    VH temp;
+    
     __SIL_LOCK_INTERRUPT( temp = sil_reh_bem((VP)iop) );
 
     return temp;
@@ -109,8 +109,8 @@
 
  VW sil_rew_bep(VP iop)
 {
-	VW temp;
-	
+    VW temp;
+    
     __SIL_LOCK_INTERRUPT( temp = sil_rew_bem((VP)iop) );
 
     return temp;

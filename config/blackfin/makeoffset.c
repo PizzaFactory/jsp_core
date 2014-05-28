@@ -42,33 +42,33 @@
 #include "task.h"
 
 #undef offsetof
-#define	offsetof(structure, field) \
-			((INT) &(((structure *) 0)->field))
+#define offsetof(structure, field) \
+            ((INT) &(((structure *) 0)->field))
 
-#define OFFSET_DEF(TYPE, FIELD)						\
-	Asm("OFFSET_DEF " #TYPE "_" #FIELD " = %0"			\
-	  : /* no output */						\
-	  : "g"(offsetof(TYPE, FIELD)))
+#define OFFSET_DEF(TYPE, FIELD)                     \
+    Asm("OFFSET_DEF " #TYPE "_" #FIELD " = %0"          \
+      : /* no output */                     \
+      : "g"(offsetof(TYPE, FIELD)))
 
-#define OFFSET_DEF2(TYPE, FIELD, FIELDNAME)				\
-	Asm("OFFSET_DEF " #TYPE "_" #FIELDNAME " = %0"			\
-	  : /* no output */						\
-	  : "g"(offsetof(TYPE, FIELD)))
+#define OFFSET_DEF2(TYPE, FIELD, FIELDNAME)             \
+    Asm("OFFSET_DEF " #TYPE "_" #FIELDNAME " = %0"          \
+      : /* no output */                     \
+      : "g"(offsetof(TYPE, FIELD)))
 
 void
 makeoffset()
 {
-	OFFSET_DEF(TCB, texptn);
-	OFFSET_DEF2(TCB, tskctxb.sp, sp);
-	OFFSET_DEF2(TCB, tskctxb.pc, pc);
+    OFFSET_DEF(TCB, texptn);
+    OFFSET_DEF2(TCB, tskctxb.sp, sp);
+    OFFSET_DEF2(TCB, tskctxb.pc, pc);
 }
 
-UW	BIT_REF_4 = 0x12345678;
-UH	BIT_REF_2 = 0x1234;
-UB	BIT_REF_1 = 0x12;
+UW  BIT_REF_4 = 0x12345678;
+UH  BIT_REF_2 = 0x1234;
+UB  BIT_REF_1 = 0x12;
 
-TCB	BIT_LB_TCB_enatex = {
-		{ NULL, NULL }, NULL, 0, 0,
-		FALSE, FALSE, TRUE,
-		0, NULL, { NULL, NULL }
-	};
+TCB BIT_LB_TCB_enatex = {
+        { NULL, NULL }, NULL, 0, 0,
+        FALSE, FALSE, TRUE,
+        0, NULL, { NULL, NULL }
+    };

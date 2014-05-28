@@ -47,7 +47,7 @@
 
 
 /*
- *	ターゲットシステム依存モジュール（EZKIT-BF534,6,7用）
+ *  ターゲットシステム依存モジュール（EZKIT-BF534,6,7用）
  *
  *  このインクルードファイルは，t_config.h のみからインクルードされる．
  *  他のファイルから直接インクルードしてはならない．
@@ -78,9 +78,9 @@
  *  TICの割込みハンドラのベクタ番号
  */
 #ifdef USE_TIC_CORE
-#define INHNO_TIMER	INHNO_CORE_TIMER
+#define INHNO_TIMER INHNO_CORE_TIMER
 #else
-#define INHNO_TIMER	INHNO_GP_TIMER7
+#define INHNO_TIMER INHNO_GP_TIMER7
 #endif
 
 
@@ -93,8 +93,8 @@
  */
 
 
-#define	SIL_DLY_TIM1	(24*1000000000/CORECLOCK)
-#define	SIL_DLY_TIM2	(12*1000000000/CORECLOCK)
+#define SIL_DLY_TIM1    (24*1000000000/CORECLOCK)
+#define SIL_DLY_TIM2    (12*1000000000/CORECLOCK)
 
 /*************************************************************************
  * uart.c用構成マクロ
@@ -116,11 +116,11 @@
 #define UART_IOP_ACCESS
 
 /*  シリアルポートのアドレス。 */
-#define UART0_ADDRESS 0xFFC00400	// 内蔵UART0 THRのアドレス。
+#define UART0_ADDRESS 0xFFC00400    // 内蔵UART0 THRのアドレス。
 #define UART1_ADDRESS 0xFFC02000    // 内蔵UART0 THRのアドレス。
 
 /*  UARTのボーレートジェネレータに設定すべき値． */
-#define UART0_DIVISOR	SYSCLOCK/16/UART0_BAUD_RATE
+#define UART0_DIVISOR   SYSCLOCK/16/UART0_BAUD_RATE
 #define UART1_DIVISOR   SYSCLOCK/16/UART1_BAUD_RATE
 
 /*  内蔵UARTを使う場合は、UARTx_BLACKFIN_UCENを宣言してUCENを初期化しなければならない。*/
@@ -241,14 +241,14 @@ void make_priority_mask( void );
 /*
  *  ターゲットシステム依存の初期化
  */
-extern void	sys_initialize(void);
+extern void sys_initialize(void);
 
 /*
  *  ターゲットシステムの終了
  *
  *  システムを終了する時に使う．ROMモニタ／GDB STUB呼出しで実現する．
  */
-extern void	sys_exit(void);
+extern void sys_exit(void);
 
 /*
  *  ターゲットシステムの文字出力
@@ -256,7 +256,7 @@ extern void	sys_exit(void);
  *  システムの低レベルの文字出力ルーチン．ROMモニタ／GDB STUB呼出しで実
  *  現する．
  */
-extern void	sys_putc(char c);
+extern void sys_putc(char c);
 
 /*
 * SIC_IARxを解析して、イベント順位ごとに割り当てられている割り込み
@@ -286,6 +286,13 @@ extern ER get_ims( IMS * p_ims );
  * 割り込みを起こしたデバイスを調べる
 */
 extern void device_dispatcher(  unsigned int priority, unsigned int imask );
+
+
+/**
+ * スプリアス・イベント・ハンドラ
+ */
+void spurious_exc_handler(VP p_excinf);
+void spurious_int_handler();
 
 #endif /* _MACRO_ONLY */
 #endif /* _SYS_CONFIG_H_ */

@@ -50,16 +50,9 @@
 #define _HW_SERIAL_H_
 
 #include <s_services.h>
+#include <sil.h>
 
 #include "uart.h"
-
-#ifdef __GNUC__         // gcc
-#include "../cdefbf537.h"
-#elif defined(__ECC__)  // visualdsp
-#include <cdefbf53x.h>
-#else
-#error "Compiler is not supported"
-#endif
 
 
 /*
@@ -82,21 +75,21 @@ sio_opn_por(ID siopid, VP_INT exinf)
      */
     siopcb = uart_opn_por(siopid, exinf);
 
-	/*
-	* Enable Corrensponding Interrupt at IMASK
-	*/
+    /*
+    * Enable Corrensponding Interrupt at IMASK
+    */
     regBase = siopcb->siopinib->reg_base;
     if ( regBase == UART0_ADDRESS ) {        // UART0の場合
-	    ena_int( INTNO_UART0_TX );
-	    ena_int( INTNO_UART0_RX );
-        *pPORT_MUX  &= ~0x0008;   // 機能をUART0に割り振る
-        *pPORTF_FER |=  0x0003;   // PF0,PF1をUART0に割り振る
+        ena_int( INTNO_UART0_TX );
+        ena_int( INTNO_UART0_RX );
+        *__pPORT_MUX  &= ~0x0008;   // 機能をUART0に割り振る
+        *__pPORTF_FER |=  0x0003;   // PF0,PF1をUART0に割り振る
     }
     else if ( regBase == UART1_ADDRESS ){    // uart1の場合
         ena_int( INTNO_UART1_TX );
         ena_int( INTNO_UART1_RX );
-        *pPORT_MUX  &= ~0x0010;   // 機能をUART0に割り振る
-        *pPORTF_FER |=  0x000C;   // PF2,PF3をUART0に割り振る
+        *__pPORT_MUX  &= ~0x0010;   // 機能をUART0に割り振る
+        *__pPORTF_FER |=  0x000C;   // PF2,PF3をUART0に割り振る
     }
 
     return(siopcb);
@@ -108,13 +101,11 @@ sio_opn_por(ID siopid, VP_INT exinf)
 Inline void
 sio_cls_por(SIOPCB *siopcb)
 {
-    UW regBase;
-
-	/*
-	 * ここではSIC_IMASKの対応ビットをクリアしない。SIC_IMASKのクリアは
-	 * 危険である。UARTからの割り込みは uart_cls_por内部で禁止するので
-	 * 充分である。
-	 */
+    /*
+     * ここではSIC_IMASKの対応ビットをクリアしない。SIC_IMASKのクリアは
+     * 危険である。UARTからの割り込みは uart_cls_por内部で禁止するので
+     * 充分である。
+     */
 
     /*
      *  デバイス依存のクローズ処理．
