@@ -58,7 +58,7 @@ use Getopt::Std;
 #
 #  オプションの処理
 #
-do getopt("COTDR");
+getopt("COTDR");
 
 $cc_path = $opt_C;
 $cc_opts = $opt_O;
@@ -160,6 +160,6 @@ sub makedepend_one {
 #
 foreach $file (@ARGV) {
 	%dependlist = ();
-	do makedepend_one($file);
-	do output_dependlist($file) if (%dependlist);
+	makedepend_one($file);
+	output_dependlist($file) if (%dependlist);
 }

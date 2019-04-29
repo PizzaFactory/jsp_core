@@ -197,10 +197,10 @@ while ($line = <INFILE>) {
 	chomp $line;
 	
 	if ($line =~ /^_OFFSET_DEF_([^ \t]+):/) {
-		do parse_offset($1);
+		parse_offset($1);
 	}
 	elsif ($line =~ /^_BIT_FIELD_OFFSET_([^ \t]+):/) {
-		do parse_bit($1);
+		parse_bit($1);
 	}
 }
 
