@@ -112,7 +112,7 @@ foreach $sym (@syms) {
 		print FILE " */\n";
 	}
 	elsif ($sym ne "") {
-		do generate_define($sym, "");
+		generate_define($sym, "");
 	}
 	else {
 		print FILE "\n";
@@ -132,7 +132,7 @@ foreach $sym (@syms) {
 		print FILE " */\n";
 	}
 	elsif ($sym ne "") {
-		do generate_define($sym, "_");
+		generate_define($sym, "_");
 	}
 	else {
 		print FILE "\n";
@@ -166,7 +166,7 @@ foreach $sym (@syms) {
 		print FILE " */\n";
 	}
 	elsif ($sym ne "") {
-		do generate_undef($sym, "");
+		generate_undef($sym, "");
 	}
 	else {
 		print FILE "\n";
@@ -186,7 +186,7 @@ foreach $sym (@syms) {
 		print FILE " */\n";
 	}
 	elsif ($sym ne "") {
-		do generate_undef($sym, "_");
+		generate_undef($sym, "_");
 	}
 	else {
 		print FILE "\n";

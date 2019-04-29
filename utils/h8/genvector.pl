@@ -94,7 +94,7 @@ ERRMESSAGE
 #
 #  オプションの処理
 #
-do Getopt("s");
+Getopt("s");
 
 if ($opt_s == 0) {
 	print STDERR "genvector.pl:\n";

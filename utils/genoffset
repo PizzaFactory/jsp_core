@@ -153,7 +153,7 @@ sub parse_bit {
 			}
 
 			# ビット位置を探す
-			$val_bit = do search_bit($val);
+			$val_bit = search_bit($val);
 
 			# バイト単位に換算する
 			if ($endian eq "B") {
@@ -244,10 +244,10 @@ while ($line = <INFILE>) {
 	chomp $line;
 
 	if ($line =~ /^[ \t]*OFFSET_DEF/) {
-		do parse_offset();
+		parse_offset();
 	}
 	elsif ($line =~ /^[ \t]*_?BIT_REF/) {
-		do ref_bit();
+		ref_bit();
 	}
 }
 seek(INFILE, 0, SEEK_SET);
@@ -255,7 +255,7 @@ while ($line = <INFILE>) {
 	chomp $line;
 
 	if ($line =~ /^[ \t]*_?BIT_([BL])([BHW])/) {
-		do parse_bit($1, $2);
+		parse_bit($1, $2);
 	}
 }
 close(INFILE);

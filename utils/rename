@@ -107,5 +107,5 @@ foreach $infile (@ARGV) {
 	# ファイルでなければスキップ
 	next unless (-f $infile);
 
-	do rename($infile) if ($infile ne $deffile);
+	rename($infile) if ($infile ne $deffile);
 }
