@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_microblaze-mire_multi
+name: jsp_microblaze_mire_multi
 projects:
   - name: jsp_core
     source:

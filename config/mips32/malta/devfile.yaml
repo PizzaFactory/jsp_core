@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_mips32-malta
+name: jsp_mips32_malta
 projects:
   - name: jsp_core
     source:

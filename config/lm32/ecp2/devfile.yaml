@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_lm32-ecp2
+name: jsp_lm32_ecp2
 projects:
   - name: jsp_core
     source:

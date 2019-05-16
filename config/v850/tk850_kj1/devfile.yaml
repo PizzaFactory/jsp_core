@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_v850-tk850_kj1
+name: jsp_v850_tk850_kj1
 projects:
   - name: jsp_core
     source:

@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_microblaze-miref
+name: jsp_microblaze_miref
 projects:
   - name: jsp_core
     source:

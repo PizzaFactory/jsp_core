@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_m32r-m3a_za36
+name: jsp_m32r_m3a_za36
 projects:
   - name: jsp_core
     source:
