@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_microblaze-multimedia
+name: jsp_microblaze_multimedia
 projects:
   - name: jsp_core
     source:

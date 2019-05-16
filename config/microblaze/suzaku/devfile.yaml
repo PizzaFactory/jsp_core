@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_microblaze-suzaku
+name: jsp_microblaze_suzaku
 projects:
   - name: jsp_core
     source:

@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_sh3-solution_engine
+name: jsp_sh3_solution_engine
 projects:
   - name: jsp_core
     source:

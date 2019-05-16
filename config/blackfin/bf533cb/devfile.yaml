@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_blackfin-bf533cb
+name: jsp_blackfin_bf533cb
 projects:
   - name: jsp_core
     source:

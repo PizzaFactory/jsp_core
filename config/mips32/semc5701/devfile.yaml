@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_mips32-semc5701
+name: jsp_mips32_semc5701
 projects:
   - name: jsp_core
     source:

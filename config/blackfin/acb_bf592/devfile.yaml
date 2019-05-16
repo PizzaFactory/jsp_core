@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_blackfin-acb_bf592
+name: jsp_blackfin_acb_bf592
 projects:
   - name: jsp_core
     source:

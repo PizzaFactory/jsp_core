@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_m68k-dve68k
+name: jsp_m68k_dve68k
 projects:
   - name: jsp_core
     source:

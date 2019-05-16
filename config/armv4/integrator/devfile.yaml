@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_armv4-integrator
+name: jsp_armv4_integrator
 projects:
   - name: jsp_core
     source:

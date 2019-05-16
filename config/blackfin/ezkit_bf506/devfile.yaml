@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_blackfin-ezkit_bf506
+name: jsp_blackfin_ezkit_bf506
 projects:
   - name: jsp_core
     source:

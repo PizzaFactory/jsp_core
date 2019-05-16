@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_blackfin-kobanzame
+name: jsp_blackfin_kobanzame
 projects:
   - name: jsp_core
     source:

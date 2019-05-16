@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_armv4-az9360mb
+name: jsp_armv4_az9360mb
 projects:
   - name: jsp_core
     source:

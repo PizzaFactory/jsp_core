@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_blackfin-ezkit_bf537
+name: jsp_blackfin_ezkit_bf537
 projects:
   - name: jsp_core
     source:

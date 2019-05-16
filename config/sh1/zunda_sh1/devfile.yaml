@@ -1,5 +1,5 @@
 specVersion: 0.0.1
-name: jsp_sh1-zunda_sh1
+name: jsp_sh1_zunda_sh1
 projects:
   - name: jsp_core
     source:
